@@ -50,13 +50,17 @@ header{
   padding:28px 48px;
   border-bottom:1px solid var(--line);
   position:fixed;top:0;left:0;right:0;
-  background:var(--cream);z-index:100;
+  background:var(--cream);z-index:9100;
 }
 /* Offset for fixed header */
 body > *:first-child + * {
   margin-top: 0;
 }
 .header-offset{height:89px}
+@media(max-width:768px){
+  header{padding:20px 20px;}
+  .header-offset{height:69px}
+}
 .logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;letter-spacing:.1em;display:flex;align-items:center;gap:9px}
 .logo-diamond{width:7px;height:7px;background:var(--green-light);transform:rotate(45deg);flex-shrink:0}
 .header-tag{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-light)}
