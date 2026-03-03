@@ -49,17 +49,8 @@ header{
   display:flex;justify-content:space-between;align-items:center;
   padding:28px 48px;
   border-bottom:1px solid var(--line);
-  position:fixed;top:0;left:0;right:0;
-  background:var(--cream);z-index:9100;
-}
-/* Offset for fixed header */
-body > *:first-child + * {
-  margin-top: 0;
-}
-.header-offset{height:89px}
-@media(max-width:768px){
-  header{padding:20px 20px;}
-  .header-offset{height:69px}
+  position:sticky;top:0;
+  background:var(--cream);z-index:100;
 }
 .logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;letter-spacing:.1em;display:flex;align-items:center;gap:9px}
 .logo-diamond{width:7px;height:7px;background:var(--green-light);transform:rotate(45deg);flex-shrink:0}
@@ -223,21 +214,6 @@ body > *:first-child + * {
 .side.before .side-label{left:14px;background:rgba(245,242,237,0.95);color:var(--ink-mid);border:1px solid var(--line);backdrop-filter:blur(4px)}
 .side.after  .side-label{right:14px;background:var(--green);color:#fff}
 
-/* CARD AFTER ARROWS */
-.card-after-arr{
-  position:absolute;top:50%;transform:translateY(-50%);
-  width:34px;height:34px;
-  background:rgba(245,242,237,.88);border:1px solid rgba(0,0,0,0.1);
-  border-radius:2px;color:var(--ink-mid);
-  font-size:16px;display:flex;align-items:center;justify-content:center;
-  cursor:none;transition:all .2s;z-index:6;
-  opacity:0;
-}
-.side.after:hover .card-after-arr{opacity:1}
-.card-after-arr:hover{background:var(--green);color:#fff;border-color:var(--green)}
-.card-after-arr.left{left:52px}
-.card-after-arr.right{right:10px}
-
 .pair-meta{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:32px;max-width:900px;margin-left:auto;margin-right:auto;}
 .pair-meta-cell{padding:12px 18px;background:var(--cream-dark);display:flex;justify-content:space-between;align-items:center}
 .pair-meta-cell.light{background:var(--cream)}
@@ -255,11 +231,11 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
 /* TAP TO SEE MORE */
 .more-badge{
   position:absolute;bottom:14px;right:14px;
-  font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:400;font-style:italic;letter-spacing:.04em;
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;
   padding:5px 12px;border-radius:1px;z-index:5;
-  background:var(--green);color:#fff;
+  background:rgba(17,17,17,0.72);color:#fff;
+  backdrop-filter:blur(4px);
   pointer-events:none;
-  white-space:nowrap;
 }
 
 /* LIGHTBOX AFTER ARROWS */
@@ -350,7 +326,6 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
   <div class="logo"><div class="logo-diamond"></div>Trevio</div>
   <div class="header-tag">Next-Level Product Visuals</div>
 </header>
-<div class="header-offset"></div>
 
 <div class="intro">
   <h1 class="intro-title" id="intro-title"></h1>
@@ -368,7 +343,7 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
 
 <footer>
   <div class="footer-logo"><div class="logo-diamond"></div>Trevio</div>
-  <span class="footer-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="25534a494a415c485c570b4e4a5140494b5c51564e5c4c654248444c490b464a48">[email&#160;protected]</a></span>
+  <span class="footer-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="20564f4c4f44594d59520e4b4f54454c4e5954534b594960474d41494c0e434f4d">[email&#160;protected]</a></span>
   <div class="footer-copy">© 2025 Trevio</div>
 </footer>
 
@@ -398,7 +373,7 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="config.js"></script>
+<script src="config.js"></script>
 <script>
 // Конфіг завантажено з config.js
 
@@ -459,7 +434,6 @@ function renderCases(list) {
       ];
       const hasMore = afterArr.length > 1;
 
-      let cardAfterIdx = 0;
       wrap.innerHTML = `
         <div class="pair" data-idx="${i}">
           <div class="side before">
@@ -469,10 +443,8 @@ function renderCases(list) {
           <div class="pair-arrow">→</div>
           <div class="side after">
             <div class="side-label">AI Result</div>
-            <img src="${afterArr[0]}" loading="lazy" alt="${c.title}" data-focus="${c.focusAfter || 'top'}" class="after-img">
-            ${hasMore ? `<button class="card-after-arr left" data-dir="-1">‹</button>` : ''}
-            ${hasMore ? `<button class="card-after-arr right" data-dir="1">›</button>` : ''}
-            ${hasMore ? `<div class="more-badge">+${afterArr.length - 1} more</div>` : ''}
+            <img src="${afterArr[0]}" loading="lazy" alt="${c.title}" data-focus="${c.focusAfter || 'top'}">
+            ${hasMore ? `<div class="more-badge">+ ${afterArr.length - 1} more</div>` : ''}
           </div>
         </div>
         <div class="pair-meta">
@@ -487,30 +459,7 @@ function renderCases(list) {
         </div>
       `;
 
-      wrap.querySelector('.pair').addEventListener('click', () => openLb(i, cardAfterIdx));
-
-      // Card arrow navigation
-      if (hasMore) {
-        wrap.querySelectorAll('.card-after-arr').forEach(btn => {
-          btn.addEventListener('click', e => {
-            e.stopPropagation();
-            cardAfterIdx = (cardAfterIdx + parseInt(btn.dataset.dir) + afterArr.length) % afterArr.length;
-            const img = wrap.querySelector('.after-img');
-            img.style.opacity = '0';
-            img.style.transition = 'opacity .2s';
-            setTimeout(() => {
-              img.src = afterArr[cardAfterIdx];
-              img.style.opacity = '1';
-              // Update badge count
-              const badge = wrap.querySelector('.more-badge');
-              if (badge) {
-                const remaining = afterArr.length - 1;
-                badge.textContent = remaining > 0 ? `+ ${remaining} more` : '';
-              }
-            }, 150);
-          });
-        });
-      }
+      wrap.querySelector('.pair').addEventListener('click', () => openLb(i, 0));
       casesEl.appendChild(wrap);
     });
 
@@ -639,4 +588,14 @@ if (window.matchMedia('(hover: hover)').matches) {
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => {
     mx=e.clientX; my=e.clientY;
-   
+    dot.style.left=mx+'px'; dot.style.top=my+'px';
+  });
+  (function anim(){
+    rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(anim);
+  })();
+}
+</script>
+</body>
+</html>
