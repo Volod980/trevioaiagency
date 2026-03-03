@@ -49,9 +49,14 @@ header{
   display:flex;justify-content:space-between;align-items:center;
   padding:28px 48px;
   border-bottom:1px solid var(--line);
-  position:sticky;top:0;
+  position:fixed;top:0;left:0;right:0;
   background:var(--cream);z-index:100;
 }
+/* Offset for fixed header */
+body > *:first-child + * {
+  margin-top: 0;
+}
+.header-offset{height:89px}
 .logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;letter-spacing:.1em;display:flex;align-items:center;gap:9px}
 .logo-diamond{width:7px;height:7px;background:var(--green-light);transform:rotate(45deg);flex-shrink:0}
 .header-tag{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-light)}
@@ -341,6 +346,7 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
   <div class="logo"><div class="logo-diamond"></div>Trevio</div>
   <div class="header-tag">Next-Level Product Visuals</div>
 </header>
+<div class="header-offset"></div>
 
 <div class="intro">
   <h1 class="intro-title" id="intro-title"></h1>
@@ -358,7 +364,7 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
 
 <footer>
   <div class="footer-logo"><div class="logo-diamond"></div>Trevio</div>
-  <span class="footer-email">volodymyr.kotelnytskyi@gmail.com</span>
+  <span class="footer-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="25534a494a415c485c570b4e4a5140494b5c51564e5c4c654248444c490b464a48">[email&#160;protected]</a></span>
   <div class="footer-copy">© 2025 Trevio</div>
 </footer>
 
@@ -388,7 +394,7 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="config.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="config.js"></script>
 <script>
 // Конфіг завантажено з config.js
 
@@ -629,14 +635,4 @@ if (window.matchMedia('(hover: hover)').matches) {
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => {
     mx=e.clientX; my=e.clientY;
-    dot.style.left=mx+'px'; dot.style.top=my+'px';
-  });
-  (function anim(){
-    rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(anim);
-  })();
-}
-</script>
-</body>
-</html>
+   
