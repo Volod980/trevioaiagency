@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trevio — Our Work</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#f5f2ed;
+  --cream-dark:#ede9e2;
+  --ink:#111;
+  --ink-mid:#555;
+  --ink-light:#aaa;
+  --green:#1a7a3c;
+  --green-light:#3ddc6e;
+  --line:rgba(0,0,0,0.08);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'DM Mono',monospace;
+  font-weight:300;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9000;
+}
+
+/* CURSOR — hidden on touch devices */
+.cur-dot{width:5px;height:5px;background:var(--green);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;transition:width .2s,height .2s,opacity .2s}
+.cur-ring{width:28px;height:28px;border:1px solid rgba(26,122,60,.3);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:9998;transition:width .3s,height .3s,border-color .3s}
+@media(hover:none){.cur-dot,.cur-ring{display:none!important} body{cursor:auto!important}}
+body:has(.pair:hover) .cur-dot{width:32px;height:32px;opacity:.08}
+body:has(.pair:hover) .cur-ring{width:40px;height:40px;border-color:var(--green)}
+
+/* HEADER */
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:28px 48px;
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;
+  background:var(--cream);z-index:100;
+}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;letter-spacing:.1em;display:flex;align-items:center;gap:9px}
+.logo-diamond{width:7px;height:7px;background:var(--green-light);transform:rotate(45deg);flex-shrink:0}
+.header-tag{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-light)}
+
+/* INTRO */
+.intro{padding:64px 48px 40px;display:flex;justify-content:space-between;align-items:flex-end;gap:32px}
+.intro-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,5.5vw,4.8rem);font-weight:300;line-height:1;letter-spacing:-.02em}
+.intro-title em{font-style:italic;color:var(--green)}
+.intro-right{max-width:260px;flex-shrink:0}
+.intro-desc{font-size:10px;line-height:2;color:var(--ink-mid);margin-bottom:16px}
+.intro-count{font-size:9px;letter-spacing:.25em;color:var(--ink-light);text-transform:uppercase}
+.intro-count span{color:var(--green)}
+.divider{height:1px;background:var(--line);margin:0 48px}
+
+/* TABS */
+.tabs-wrap{padding:40px 48px 0}
+.tabs{
+  display:flex;gap:4px;
+  align-items:flex-end;
+  border-bottom:1px solid var(--line);
+  overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-x;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-light);
+  padding:10px 20px 12px;
+  cursor:none;white-space:nowrap;
+  background:none;
+  border:none;
+  position:relative;
+  margin-bottom:-1px;
+  transition:color .25s;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+  -webkit-user-select:none;
+  -khtml-user-drag:none;
+  pointer-events:auto;
+}
+/* Tab shape as background pseudo — text stays on top */
+.tab::before{
+  content:'';
+  position:absolute;inset:0;
+  background:transparent;
+  border:1px solid transparent;
+  border-bottom:none;
+  border-radius:6px 6px 0 0;
+  transition:background .25s,border-color .25s;
+  pointer-events:none;
+  z-index:-1;
+}
+.tab:hover{color:var(--ink)}
+.tab:hover::before{background:var(--cream-dark);border-color:var(--line)}
+.tab.active{color:var(--green);z-index:2;}
+.tab.active::before{
+  background:var(--cream);
+  border-color:rgba(0,0,0,0.12);
+  box-shadow:0 -2px 0 0 var(--green) inset;
+}
+.tab.active::after{
+  content:'';
+  position:absolute;
+  bottom:-1px;left:1px;right:1px;
+  height:2px;
+  background:var(--cream);
+  z-index:3;
+}
+
+/* CASES */
+.cases{padding:0 48px 80px}
+
+.cases-group{
+  opacity:1;
+  transition:opacity .3s ease;
+}
+.cases-group.hiding{opacity:0;pointer-events:none}
+
+.pair-wrap{
+  opacity:0;transform:translateY(24px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+.pair-wrap.visible{opacity:1;transform:translateY(0)}
+
+.pair{
+  display:grid;grid-template-columns:1fr 1fr;gap:2px;
+  position:relative;overflow:hidden;cursor:none;margin-top:2px;
+  max-width:900px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* All tab — 3 columns grid */
+.cases.view-all{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:3px;
+  max-width:1100px;
+  margin:0 auto;
+  padding-bottom:80px;
+}
+.cases.view-all .pair-wrap{ margin:0 }
+.cases.view-all .pair{ max-width:100%;margin:0 }
+.cases.view-all .pair-meta{ max-width:100% }
+
+/* Multi-photo arrows on right side */
+.after-nav{
+  position:absolute;bottom:14px;right:14px;
+  display:flex;align-items:center;gap:6px;
+  z-index:6;
+}
+.after-nav-btn{
+  width:28px;height:28px;
+  background:rgba(245,242,237,.92);
+  border:1px solid var(--line);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--ink-mid);
+  cursor:none;
+  transition:all .2s;
+  backdrop-filter:blur(4px);
+}
+.after-nav-btn:hover{background:var(--green);border-color:var(--green);color:#fff}
+.after-counter{
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:.1em;
+  color:var(--ink-mid);
+  background:rgba(245,242,237,.92);
+  padding:3px 7px;border-radius:2px;
+  backdrop-filter:blur(4px);
+  border:1px solid var(--line);
+}
+
+.pair-arrow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:10;width:40px;height:40px;
+  background:var(--cream);border:1px solid var(--line);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:var(--ink-mid);
+  transition:all .25s ease;box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
+.pair:hover .pair-arrow{background:var(--green);border-color:var(--green);color:#fff;transform:translate(-50%,-50%) scale(1.08)}
+
+.side{position:relative;overflow:hidden;background:var(--cream-dark);aspect-ratio:4/5}
+.side img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94),filter .4s ease;filter:saturate(.88)}
+.side img[data-focus="top"]{object-position:center top}
+.side img[data-focus="bottom"]{object-position:center bottom}
+.pair:hover .side img{transform:scale(1.04);filter:saturate(1.05)}
+
+.side-label{
+  position:absolute;top:14px;
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+  padding:4px 10px;border-radius:1px;
+  z-index:5;
+}
+.side.before .side-label{left:14px;background:rgba(245,242,237,0.95);color:var(--ink-mid);border:1px solid var(--line);backdrop-filter:blur(4px)}
+.side.after  .side-label{right:14px;background:var(--green);color:#fff}
+
+/* CARD AFTER ARROWS */
+.card-after-arr{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:34px;height:34px;
+  background:rgba(245,242,237,.88);border:1px solid rgba(0,0,0,0.1);
+  border-radius:2px;color:var(--ink-mid);
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+  cursor:none;transition:all .2s;z-index:6;
+  opacity:0;
+}
+.side.after:hover .card-after-arr{opacity:1}
+.card-after-arr:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.card-after-arr.left{left:52px}
+.card-after-arr.right{right:10px}
+
+.pair-meta{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:32px;max-width:900px;margin-left:auto;margin-right:auto;}
+.pair-meta-cell{padding:12px 18px;background:var(--cream-dark);display:flex;justify-content:space-between;align-items:center}
+.pair-meta-cell.light{background:var(--cream)}
+.meta-title{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:400;letter-spacing:.02em}
+.meta-tag{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-light)}
+.meta-green{color:var(--green)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-content:space-between;align-items:center}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;display:flex;align-items:center;gap:8px;color:var(--ink-mid)}
+.footer-email{font-size:10px;color:var(--ink-mid);text-decoration:none;letter-spacing:.03em;border-bottom:1px solid var(--line);padding-bottom:1px;transition:color .2s,border-color .2s}
+.footer-email:hover{color:var(--green);border-color:var(--green)}
+.footer-copy{font-size:9px;color:var(--ink-light);letter-spacing:.1em}
+
+/* TAP TO SEE MORE */
+.more-badge{
+  position:absolute;bottom:14px;right:14px;
+  font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:400;font-style:italic;letter-spacing:.04em;
+  padding:5px 12px;border-radius:1px;z-index:5;
+  background:var(--green);color:#fff;
+  pointer-events:none;
+  white-space:nowrap;
+}
+
+/* LIGHTBOX AFTER ARROWS */
+.lb-after-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:32px;height:32px;
+  background:rgba(245,242,237,.9);border:1px solid var(--line);
+  border-radius:2px;color:var(--ink-mid);
+  font-size:20px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;transition:all .2s;z-index:10;
+  display:none;
+}
+.lb-after-arrow:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.lb-after-arrow-left{left:10px}
+.lb-after-arrow-right{right:10px}
+.lb-side.after:hover .lb-after-arrow,
+.lb-after-arrow:focus{display:flex}
+
+/* DOTS */
+.lb-dots{display:flex;gap:6px;align-items:center}
+.lb-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--line);border:1px solid rgba(0,0,0,0.15);
+  cursor:none;transition:all .2s;padding:0;
+}
+.lb-dot.active{background:var(--green);border-color:var(--green);transform:scale(1.2)}
+
+/* Always show arrows when dots visible */
+.lb-dots:not(:empty) ~ * .lb-after-arrow,
+.lb-side.after .lb-after-arrow{display:flex}
+
+/* LIGHTBOX */
+.lb{
+  position:fixed;inset:0;z-index:8000;
+  background:rgba(245,242,237,.97);backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .35s ease;
+}
+.lb.open{opacity:1;pointer-events:all}
+.lb-images{display:flex;gap:3px;max-height:78vh;align-items:stretch}
+.lb-side{
+  position:relative;overflow:hidden;border-radius:2px;
+  background:var(--cream-dark);
+  transform:translateY(14px);
+  transition:transform .4s cubic-bezier(.25,.46,.45,.94);
+  max-width:38vw;
+}
+.lb.open .lb-side{transform:translateY(0)}
+.lb-side:last-child{transition-delay:.05s}
+.lb-side img{height:78vh;width:auto;max-width:38vw;display:block;object-fit:cover}
+.lb-side img[data-focus="top"]{object-position:center top}
+.lb-side img[data-focus="bottom"]{object-position:center bottom}
+.lb-side-label{position:absolute;top:14px;font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:4px 10px;border-radius:1px;font-family:'DM Mono',monospace}
+.lb-side.before .lb-side-label{left:14px;background:rgba(245,242,237,.92);color:var(--ink-mid);border:1px solid var(--line)}
+.lb-side.after  .lb-side-label{right:14px;background:var(--green);color:#fff}
+.lb-bottom{display:flex;justify-content:space-between;align-items:center;width:100%;padding:16px 32px 0;max-width:80vw}
+.lb-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;color:var(--ink-mid);letter-spacing:.05em}
+.lb-nav{display:flex;gap:8px}
+.lb-btn{width:36px;height:36px;border:1px solid var(--line);background:none;color:var(--ink-mid);cursor:none;font-size:14px;border-radius:2px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:'DM Mono',monospace}
+.lb-btn:hover{border-color:var(--green);color:var(--green)}
+.lb-close{position:fixed;top:22px;right:22px;width:38px;height:38px;border:1px solid var(--line);background:none;color:var(--ink-mid);cursor:none;font-size:13px;border-radius:2px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:'DM Mono',monospace;z-index:8100}
+.lb-close:hover{border-color:var(--green);color:var(--green)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  header,footer,.intro,.cases,.tabs-wrap,.divider{padding-left:20px;padding-right:20px}
+  .divider{margin:0 20px}
+  .intro{flex-direction:column;padding-top:40px}
+  .intro-right{max-width:100%}
+  .tabs{gap:20px}
+  .lb-images{flex-direction:column;max-height:none}
+  .lb-side{max-width:90vw}
+  .lb-side img{height:40vh;width:90vw;max-width:90vw}
+}
+@media(max-width:480px){
+  .pair{grid-template-columns:1fr 1fr}
+  .pair-arrow{width:30px;height:30px;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<header>
+  <div class="logo"><div class="logo-diamond"></div>Trevio</div>
+  <div class="header-tag">Next-Level Product Visuals</div>
+</header>
+
+<div class="intro">
+  <h1 class="intro-title" id="intro-title"></h1>
+  <div class="intro-right">
+    <p class="intro-desc" id="intro-desc"></p>
+    <div class="intro-count"><span id="case-count">0</span> cases below</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="tabs-wrap"><div class="tabs" id="tabs"></div></div>
+
+<div class="cases" id="cases"></div>
+
+<footer>
+  <div class="footer-logo"><div class="logo-diamond"></div>Trevio</div>
+  <span class="footer-email">volodymyr.kotelnytskyi@gmail.com</span>
+  <div class="footer-copy">© 2025 Trevio</div>
+</footer>
+
+<div class="lb" id="lb">
+  <button class="lb-close" id="lb-close">✕</button>
+  <div class="lb-images">
+    <div class="lb-side before">
+      <div class="lb-side-label">Product</div>
+      <img id="lb-img-before" src="" alt="">
+    </div>
+    <div class="lb-side after" style="position:relative">
+      <div class="lb-side-label">AI Result</div>
+      <img id="lb-img-after" src="" alt="">
+      <button class="lb-after-arrow lb-after-arrow-left" id="lb-after-prev">‹</button>
+      <button class="lb-after-arrow lb-after-arrow-right" id="lb-after-next">›</button>
+    </div>
+  </div>
+  <div class="lb-bottom">
+    <div class="lb-title" id="lb-title"></div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="lb-dots" id="lb-dots"></div>
+      <div class="lb-nav">
+        <button class="lb-btn" id="lb-prev">←</button>
+        <button class="lb-btn" id="lb-next">→</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="config.js"></script>
+<script>
+// Конфіг завантажено з config.js
+
+// Apply config
+document.title = SITE_TITLE;
+document.getElementById('intro-desc').textContent = SITE_DESC;
+document.getElementById('intro-title').innerHTML =
+  `${SITE_LINE1}<br><em>${SITE_LINE2}</em>`;
+
+// Build tabs
+const tabsEl   = document.getElementById('tabs');
+const casesEl  = document.getElementById('cases');
+const countEl  = document.getElementById('case-count');
+
+const allTags = ['All', ...new Set(CASES.map(c => c.tag))];
+let activeTab = 'All';
+let currentFiltered = [...CASES];
+let lbCur = 0;
+let lbAfterIdx = 0;  // index of currently shown "after" photo in lightbox
+
+allTags.forEach(tag => {
+  const btn = document.createElement('button');
+  btn.className = 'tab' + (tag === 'All' ? ' active' : '');
+  btn.textContent = tag;
+  btn.addEventListener('click', () => switchTab(tag));
+  tabsEl.appendChild(btn);
+});
+
+function switchTab(tag, updateHash = true) {
+  activeTab = tag;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.textContent === tag));
+  currentFiltered = tag === 'All' ? [...CASES] : CASES.filter(c => c.tag === tag);
+  countEl.textContent = currentFiltered.length;
+  renderCases(currentFiltered);
+  if (updateHash) {
+    const hash = tag === 'All' ? '' : '#' + tag.toLowerCase().replace(/ /g, '-');
+    history.replaceState(null, '', hash || window.location.pathname);
+  }
+}
+
+function renderCases(list) {
+  casesEl.style.opacity = '0';
+  casesEl.style.transform = 'translateY(8px)';
+  casesEl.style.transition = 'opacity .25s ease, transform .25s ease';
+
+  setTimeout(() => {
+    casesEl.innerHTML = '';
+
+    list.forEach((c, i) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'pair-wrap';
+      wrap.style.transitionDelay = `${i * 0.06}s`;
+
+      // Support after as string or array; results = extra photos
+      const afterArr = [
+        ...(Array.isArray(c.after) ? c.after : [c.after]),
+        ...(c.results || [])
+      ];
+      const hasMore = afterArr.length > 1;
+
+      let cardAfterIdx = 0;
+      wrap.innerHTML = `
+        <div class="pair" data-idx="${i}">
+          <div class="side before">
+            <div class="side-label">Product</div>
+            <img src="${c.before}" loading="lazy" alt="${c.title}" data-focus="${c.focusBefore || 'center'}">
+          </div>
+          <div class="pair-arrow">→</div>
+          <div class="side after">
+            <div class="side-label">AI Result</div>
+            <img src="${afterArr[0]}" loading="lazy" alt="${c.title}" data-focus="${c.focusAfter || 'top'}" class="after-img">
+            ${hasMore ? `<button class="card-after-arr left" data-dir="-1">‹</button>` : ''}
+            ${hasMore ? `<button class="card-after-arr right" data-dir="1">›</button>` : ''}
+            ${hasMore ? `<div class="more-badge">+${afterArr.length - 1} more</div>` : ''}
+          </div>
+        </div>
+        <div class="pair-meta">
+          <div class="pair-meta-cell">
+            <span class="meta-title">${c.title}</span>
+            <span class="meta-tag">${c.tag}</span>
+          </div>
+          <div class="pair-meta-cell light">
+            <span class="meta-tag meta-green">AI Generated</span>
+            <span class="meta-tag">Trevio ◆</span>
+          </div>
+        </div>
+      `;
+
+      wrap.querySelector('.pair').addEventListener('click', () => openLb(i, cardAfterIdx));
+
+      // Card arrow navigation
+      if (hasMore) {
+        wrap.querySelectorAll('.card-after-arr').forEach(btn => {
+          btn.addEventListener('click', e => {
+            e.stopPropagation();
+            cardAfterIdx = (cardAfterIdx + parseInt(btn.dataset.dir) + afterArr.length) % afterArr.length;
+            const img = wrap.querySelector('.after-img');
+            img.style.opacity = '0';
+            img.style.transition = 'opacity .2s';
+            setTimeout(() => {
+              img.src = afterArr[cardAfterIdx];
+              img.style.opacity = '1';
+              // Update badge count
+              const badge = wrap.querySelector('.more-badge');
+              if (badge) {
+                const remaining = afterArr.length - 1;
+                badge.textContent = remaining > 0 ? `+ ${remaining} more` : '';
+              }
+            }, 150);
+          });
+        });
+      }
+      casesEl.appendChild(wrap);
+    });
+
+    casesEl.style.opacity = '1';
+    casesEl.style.transform = 'translateY(0)';
+
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.pair-wrap').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), i * 60);
+      });
+    });
+  }, 260);
+}
+
+// ── LIGHTBOX ──
+const lb        = document.getElementById('lb');
+const lbBefore  = document.getElementById('lb-img-before');
+const lbAfter   = document.getElementById('lb-img-after');
+const lbTitleEl = document.getElementById('lb-title');
+const lbDotsEl  = document.getElementById('lb-dots');
+
+function openLb(i, afterIdx = 0) {
+  lbCur = i;
+  lbAfterIdx = afterIdx;
+  updateLb();
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLb() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function getAfterArr(c) {
+  return [
+    ...(Array.isArray(c.after) ? c.after : [c.after]),
+    ...(c.results || [])
+  ];
+}
+
+function updateLb() {
+  const c = currentFiltered[lbCur];
+  const afterArr = getAfterArr(c);
+
+  lbBefore.style.opacity = '0';
+  lbAfter.style.opacity  = '0';
+  lbBefore.style.transition = 'opacity .25s ease';
+  lbAfter.style.transition  = 'opacity .25s ease';
+
+  setTimeout(() => {
+    lbBefore.src = c.before;
+    lbBefore.setAttribute('data-focus', c.focusBefore || 'center');
+
+    lbAfter.src = afterArr[lbAfterIdx] || afterArr[0];
+    lbAfter.setAttribute('data-focus', c.focusAfter || 'top');
+
+    lbTitleEl.textContent = c.title;
+
+    // Dots for multiple after photos
+    lbDotsEl.innerHTML = '';
+    if (afterArr.length > 1) {
+      afterArr.forEach((_, di) => {
+        const dot = document.createElement('button');
+        dot.className = 'lb-dot' + (di === lbAfterIdx ? ' active' : '');
+        dot.addEventListener('click', () => { lbAfterIdx = di; updateLb(); });
+        lbDotsEl.appendChild(dot);
+      });
+    }
+
+    lbBefore.style.opacity = '1';
+    lbAfter.style.opacity  = '1';
+  }, 200);
+}
+
+function lbNextAfter() {
+  const afterArr = getAfterArr(currentFiltered[lbCur]);
+  lbAfterIdx = (lbAfterIdx + 1) % afterArr.length;
+  updateLb();
+}
+function lbPrevAfter() {
+  const afterArr = getAfterArr(currentFiltered[lbCur]);
+  lbAfterIdx = (lbAfterIdx - 1 + afterArr.length) % afterArr.length;
+  updateLb();
+}
+
+document.getElementById('lb-close').addEventListener('click', closeLb);
+document.getElementById('lb-prev').addEventListener('click', () => {
+  lbCur = (lbCur - 1 + currentFiltered.length) % currentFiltered.length;
+  lbAfterIdx = 0;
+  updateLb();
+});
+document.getElementById('lb-next').addEventListener('click', () => {
+  lbCur = (lbCur + 1) % currentFiltered.length;
+  lbAfterIdx = 0;
+  updateLb();
+});
+document.getElementById('lb-after-prev').addEventListener('click', lbPrevAfter);
+document.getElementById('lb-after-next').addEventListener('click', lbNextAfter);
+
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape')      closeLb();
+  if (e.key === 'ArrowLeft')  { lbCur = (lbCur - 1 + currentFiltered.length) % currentFiltered.length; lbAfterIdx = 0; updateLb(); }
+  if (e.key === 'ArrowRight') { lbCur = (lbCur + 1) % currentFiltered.length; lbAfterIdx = 0; updateLb(); }
+});
+
+// Hash routing
+function getTabFromHash() {
+  const hash = window.location.hash.replace('#', '').replace(/-/g, ' ');
+  if (!hash) return 'All';
+  return allTags.find(t => t.toLowerCase() === hash.toLowerCase()) || 'All';
+}
+const initialTab = getTabFromHash();
+document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.textContent === initialTab));
+currentFiltered = initialTab === 'All' ? [...CASES] : CASES.filter(c => c.tag === initialTab);
+countEl.textContent = currentFiltered.length;
+renderCases(currentFiltered);
+window.addEventListener('hashchange', () => switchTab(getTabFromHash(), false));
+
+// ── CURSOR ──
+const dot  = document.getElementById('curDot');
+const ring = document.getElementById('curRing');
+if (window.matchMedia('(hover: hover)').matches) {
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => {
+    mx=e.clientX; my=e.clientY;
+    dot.style.left=mx+'px'; dot.style.top=my+'px';
+  });
+  (function anim(){
+    rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(anim);
+  })();
+}
+</script>
+</body>
+</html>
