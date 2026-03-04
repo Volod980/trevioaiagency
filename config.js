@@ -101,8 +101,49 @@ const CASES = [
   {
     title:       "Parfume — Chloe",
     tag:         "Parfumes",
-    before:      "2_до.jpeg",
-    after:       "2_після.png",
+    before:      "photos/parfumes/1_до.png",
+    after:       "photos/parfumes/1_1_після.webp",
+	results:     ["photos/parfumes/1_2_після.webp", "photos/parfumes/1_3_після.webp","photos/parfumes/1_4_після.webp"],
+    focusBefore: "center",
+    focusAfter:  "top",
+  },
+
+  {
+    title:       "Parfume — Chloe",
+    tag:         "Parfumes",
+    before:      "photos/parfumes/2_до.png",
+    after:       "photos/parfumes/2_1_після.webp",
+	results:     ["photos/parfumes/2_2_після.webp", "photos/parfumes/2_3_після.webp"],
+    focusBefore: "center",
+    focusAfter:  "top",
+  },
+
+  {
+    title:       "Parfume — Chloe",
+    tag:         "Parfumes",
+    before:      "photos/parfumes/1_до.webp",
+    after:       "photos/parfumes/1_1_після.webp",
+	results:     ["photos/parfumes/1_2_після.webp", "photos/parfumes/1_3_після.webp","photos/parfumes/1_4_після.webp"],
+    focusBefore: "center",
+    focusAfter:  "top",
+  },
+  
+  {
+    title:       "Parfume — Chloe",
+    tag:         "Parfumes",
+    before:      "photos/parfumes/1_до.webp",
+    after:       "photos/parfumes/1_1_після.webp",
+	results:     ["photos/parfumes/1_2_після.webp", "photos/parfumes/1_3_після.webp","photos/parfumes/1_4_після.webp"],
+    focusBefore: "center",
+    focusAfter:  "top",
+  },
+  
+  {
+    title:       "Parfume — Chloe",
+    tag:         "Parfumes",
+    before:      "photos/parfumes/1_до.webp",
+    after:       "photos/parfumes/1_1_після.webp",
+	results:     ["photos/parfumes/1_2_після.webp", "photos/parfumes/1_3_після.webp","photos/parfumes/1_4_після.webp"],
     focusBefore: "center",
     focusAfter:  "top",
   },
