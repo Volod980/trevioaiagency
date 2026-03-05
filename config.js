@@ -138,17 +138,6 @@ const CASES = [
     focusBefore: "center",
     focusAfter:  "top",
   },
-
-  {
-    title:       "Parfume — Armaf",
-    tag:         "Parfumes",
-    before:      "photos/parfumes/4_до.png",
-    after:       "photos/parfumes/4_1_після.webp",
-	results:     ["photos/parfumes/4_2_після.webp", "photos/parfumes/4_3_після.webp"],
-    focusBefore: "center",
-    focusAfter:  "top",
-  },
-
   {
     title:       "Parfume — Armani",
     tag:         "Parfumes",
