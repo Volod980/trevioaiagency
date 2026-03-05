@@ -358,7 +358,7 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
 
 <footer>
   <div class="footer-logo"><div class="logo-diamond"></div>Trevio</div>
-  <span class="footer-email">trevioagency@gmail.com</span>
+  <span class="footer-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5024223526393f3137353e332910373d31393c7e333f3d">[email&#160;protected]</a></span>
   <div class="footer-copy">©2025 Trevio</div>
 </footer>
 
@@ -388,7 +388,7 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="config.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="config.js"></script>
 <script>
 // Конфіг завантажено з config.js
 
@@ -417,12 +417,21 @@ allTags.forEach(tag => {
   tabsEl.appendChild(btn);
 });
 
+function preloadCategory(list) {
+  list.forEach(c => {
+    [c.after, ...(c.results || [])].forEach(src => {
+      if (src) { const img = new Image(); img.src = src; }
+    });
+  });
+}
+
 function switchTab(tag, updateHash = true) {
   activeTab = tag;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.textContent === tag));
   currentFiltered = tag === 'All' ? [...CASES] : CASES.filter(c => c.tag === tag);
   countEl.textContent = currentFiltered.length;
   renderCases(currentFiltered);
+  preloadCategory(currentFiltered);
   if (updateHash) {
     const hash = tag === 'All' ? '' : '#' + tag.toLowerCase().replace(/ /g, '-');
     history.replaceState(null, '', hash || window.location.pathname);
@@ -620,6 +629,7 @@ document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.te
 currentFiltered = initialTab === 'All' ? [...CASES] : CASES.filter(c => c.tag === initialTab);
 countEl.textContent = currentFiltered.length;
 renderCases(currentFiltered);
+preloadCategory(currentFiltered);
 window.addEventListener('hashchange', () => switchTab(getTabFromHash(), false));
 
 // ── CURSOR ──
@@ -629,14 +639,4 @@ if (window.matchMedia('(hover: hover)').matches) {
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => {
     mx=e.clientX; my=e.clientY;
-    dot.style.left=mx+'px'; dot.style.top=my+'px';
-  });
-  (function anim(){
-    rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(anim);
-  })();
-}
-</script>
-</body>
-</html>
+    dot.style.l

@@ -46,9 +46,10 @@ const CASES = [
     tag:         "Clothing",
     before:      "1_до.jpeg",
     after:       "1_після.jpeg",
+	results: ["1_після.jpeg","1_після.jpeg"],
     focusBefore: "center",
     focusAfter:  "top",
-    results: ["1_після.jpeg","1_після.jpeg"],  // розкоментуй щоб додати варіанти
+      // розкоментуй щоб додати варіанти
   },
   {
     title:       "Dress — Summer Editorial",
@@ -57,6 +58,15 @@ const CASES = [
     after:       "2_після.jpeg",
     focusBefore: "center",
     focusAfter:  "top",
+  },
+  {
+    title:       "Jacket — Street Style",
+    tag:         "Clothing",
+    before:      "1_до.jpeg",
+    after:       "1_після.jpeg",
+    focusBefore: "center",
+    focusAfter:  "top",
+      // розкоментуй щоб додати варіанти
   },
 
   // ── FOOTWEAR ──────────────────────────────────────────────────
@@ -75,6 +85,7 @@ const CASES = [
     after:       "photos/loafers-after.jpg",
     focusBefore: "center",
     focusAfter:  "center",
+	results: ["1_після.jpeg","1_після.jpeg"],
   },
 
   // ── WATCHES ───────────────────────────────────────────────────
@@ -102,14 +113,14 @@ const CASES = [
     title:       "Parfume — Chloe",
     tag:         "Parfumes",
     before:      "photos/parfumes/1_до.png",
-    after:       "photos/parfumes/1_1_після.webp",
-	results:     ["photos/parfumes/1_2_після.webp", "photos/parfumes/1_3_після.webp","photos/parfumes/1_4_після.webp"],
+    after:       "photos/parfumes/1_4_після.webp",
+	results:     ["photos/parfumes/1_2_після.webp", "photos/parfumes/1_3_після.webp","photos/parfumes/1_1_після.webp"],
     focusBefore: "center",
     focusAfter:  "top",
   },
 
   {
-    title:       "Parfume — Chloe",
+    title:       "Parfume — Valentino",
     tag:         "Parfumes",
     before:      "photos/parfumes/2_до.png",
     after:       "photos/parfumes/2_1_після.webp",
@@ -119,31 +130,40 @@ const CASES = [
   },
 
   {
-    title:       "Parfume — Chloe",
+    title:       "Parfume — Armaf",
     tag:         "Parfumes",
-    before:      "photos/parfumes/1_до.webp",
-    after:       "photos/parfumes/1_1_після.webp",
-	results:     ["photos/parfumes/1_2_після.webp", "photos/parfumes/1_3_після.webp","photos/parfumes/1_4_після.webp"],
+    before:      "photos/parfumes/3_до.png",
+    after:       "photos/parfumes/3_1_після.webp",
+	results:     ["photos/parfumes/3_2_після.webp", "photos/parfumes/3_3_після.webp"],
     focusBefore: "center",
     focusAfter:  "top",
   },
-  
+
   {
-    title:       "Parfume — Chloe",
+    title:       "Parfume — Armaf",
     tag:         "Parfumes",
-    before:      "photos/parfumes/1_до.webp",
-    after:       "photos/parfumes/1_1_після.webp",
-	results:     ["photos/parfumes/1_2_після.webp", "photos/parfumes/1_3_після.webp","photos/parfumes/1_4_після.webp"],
+    before:      "photos/parfumes/4_до.png",
+    after:       "photos/parfumes/4_1_після.webp",
+	results:     ["photos/parfumes/4_2_після.webp", "photos/parfumes/4_3_після.webp"],
     focusBefore: "center",
     focusAfter:  "top",
   },
-  
+
   {
-    title:       "Parfume — Chloe",
+    title:       "Parfume — Armani",
     tag:         "Parfumes",
-    before:      "photos/parfumes/1_до.webp",
-    after:       "photos/parfumes/1_1_після.webp",
-	results:     ["photos/parfumes/1_2_після.webp", "photos/parfumes/1_3_після.webp","photos/parfumes/1_4_після.webp"],
+    before:      "photos/parfumes/4_до.png",
+    after:       "photos/parfumes/4_1_після.webp",
+	results:     ["photos/parfumes/4_2_після.webp", "photos/parfumes/4_3_після.webp"],
+    focusBefore: "center",
+    focusAfter:  "top",
+  },
+  {
+    title:       "Parfume — Zadig & Voltaire",
+    tag:         "Parfumes",
+    before:      "photos/parfumes/5_до.png",
+    after:       "photos/parfumes/5_1_після.webp",
+	results:     ["photos/parfumes/5_2_після.webp"],
     focusBefore: "center",
     focusAfter:  "top",
   },
