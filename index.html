@@ -25,12 +25,12 @@ body{background:var(--bg);color:var(--ink);font-family:'DM Mono',monospace;font-
 body::after{
   content:'';position:fixed;inset:0;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:9000;
+  pointer-events:none;z-index:100;
 }
 
 /* CURSOR */
-.cur-dot{width:5px;height:5px;background:var(--green);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;transition:width .2s,height .2s,opacity .2s}
-.cur-ring{width:28px;height:28px;border:1px solid rgba(62,207,62,.2);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:9998;transition:width .3s,height .3s,border-color .3s}
+.cur-dot{width:5px;height:5px;background:var(--green);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99999;transition:width .2s,height .2s,opacity .2s}
+.cur-ring{width:28px;height:28px;border:1px solid rgba(62,207,62,.3);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99998;transition:width .3s,height .3s,border-color .3s}
 @media(hover:none){.cur-dot,.cur-ring{display:none!important}body{cursor:auto!important}}
 body:has(.pair:hover) .cur-ring{width:40px;height:40px;border-color:var(--green)}
 
@@ -205,19 +205,44 @@ header{
   display:flex;justify-content:space-between;align-items:center;
   padding:0 48px;border-bottom:1px solid var(--line);
 }
-.grid-switcher{display:flex;gap:4px;align-items:center}
+.grid-switcher{
+  display:flex;gap:2px;align-items:center;
+  padding:20px 0;
+}
 .grid-btn{
-  width:28px;height:28px;
-  background:none;border:1px solid transparent;
-  border-radius:2px;cursor:none;
+  width:32px;height:32px;
+  background:none;border:none;
+  cursor:none;
   display:flex;align-items:center;justify-content:center;
   transition:all .2s;padding:0;
+  opacity:.3;
 }
-.grid-btn:hover{border-color:var(--line)}
-.grid-btn.active{border-color:var(--green)}
-.grid-btn svg{display:block}
-.grid-btn.active rect,.grid-btn.active path{fill:var(--green)}
-.grid-btn rect,.grid-btn path{fill:var(--ink-mid);transition:fill .2s}
+.grid-btn:hover{opacity:.7}
+.grid-btn.active{opacity:1}
+.grid-btn svg rect,.grid-btn svg path{fill:var(--ink);transition:fill .2s}
+.grid-btn.active svg rect,.grid-btn.active svg path{fill:var(--green)}
+
+/* label before switcher */
+.grid-label{
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-mid);
+  margin-right:8px;
+}
+
+/* cases top bar with switcher */
+.cases-header{
+  display:flex;justify-content:flex-end;align-items:center;
+  padding:16px 48px 0;
+  gap:8px;
+}
+.cases-header .grid-label{font-size:8px;letter-spacing:.15em;color:var(--ink-mid)}
+.cases-header .grid-switcher{padding:0;gap:1px}
+.cases-header .grid-btn{
+  width:30px;height:30px;opacity:.25;
+  border:1px solid transparent;border-radius:2px;
+}
+.cases-header .grid-btn:hover{opacity:.6;border-color:var(--line)}
+.cases-header .grid-btn.active{opacity:1;border-color:var(--ink-light)}
 
 /* CASES GRID MODES */
 .cases{padding:32px 48px 100px}
@@ -351,18 +376,19 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
 
 <div class="tabs-bar">
   <div class="tabs" id="tabs"></div>
+</div>
+
+<div class="cases-header">
+  <span class="grid-label">View</span>
   <div class="grid-switcher">
-    <!-- 1 col -->
     <button class="grid-btn active" id="grid-1" title="1 column">
-      <svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="5" rx="1"/><rect x="1" y="8" width="12" height="5" rx="1"/></svg>
+      <svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="4" rx="1"/><rect x="2" y="8" width="10" height="4" rx="1"/></svg>
     </button>
-    <!-- 2 col -->
     <button class="grid-btn" id="grid-2" title="2 columns">
-      <svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="5" height="12" rx="1"/><rect x="8" y="1" width="5" height="12" rx="1"/></svg>
+      <svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="4" height="10" rx="1"/><rect x="8" y="2" width="4" height="10" rx="1"/></svg>
     </button>
-    <!-- 3 col -->
     <button class="grid-btn" id="grid-3" title="3 columns">
-      <svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="3" height="12" rx="1"/><rect x="5.5" y="1" width="3" height="12" rx="1"/><rect x="10" y="1" width="3" height="12" rx="1"/></svg>
+      <svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="2" width="3" height="10" rx="1"/><rect x="5.5" y="2" width="3" height="10" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/></svg>
     </button>
   </div>
 </div>
@@ -417,7 +443,7 @@ if (HERO_AFTER)  { document.getElementById('hero-after-ph').style.display='none'
 // ── TABS & CASES ──
 const tabsEl=document.getElementById('tabs');
 const casesEl=document.getElementById('cases');
-const countEl=document.getElementById('case-count');
+const countEl={textContent:''};  // removed from UI, keep as dummy
 const allTags=['All',...new Set(CASES.map(c=>c.tag))];
 let activeTab='All', currentFiltered=[...CASES], lbCur=0, lbAfterIdx=0;
 
