@@ -124,7 +124,7 @@ header{
 .tab.active::after{background:var(--green)}
 
 /* CASES */
-.cases{padding:0 48px 100px}
+.cases{padding:32px 48px 100px}
 .pair-wrap{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
 .pair-wrap.visible{opacity:1;transform:translateY(0)}
 
@@ -135,16 +135,7 @@ header{
   max-width:960px;margin-left:auto;margin-right:auto;
 }
 
-/* All tab — 3 col */
-.cases.view-all{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:1px;background:var(--line);
-  max-width:1200px;margin:0 auto;
-  padding-left:0;padding-right:0;padding-bottom:100px;
-}
-.cases.view-all .pair-wrap{margin:0}
-.cases.view-all .pair{max-width:100%;margin:0;background:none;gap:0}
-.cases.view-all .pair-meta{max-width:100%}
+
 
 /* arrow center */
 .pair-arrow{
@@ -209,7 +200,53 @@ header{
   background:var(--green);color:#000;pointer-events:none;white-space:nowrap;border-radius:1px;
 }
 
-/* FOOTER */
+/* GRID SWITCHER */
+.tabs-bar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0 48px;border-bottom:1px solid var(--line);
+}
+.grid-switcher{display:flex;gap:4px;align-items:center}
+.grid-btn{
+  width:28px;height:28px;
+  background:none;border:1px solid transparent;
+  border-radius:2px;cursor:none;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;padding:0;
+}
+.grid-btn:hover{border-color:var(--line)}
+.grid-btn.active{border-color:var(--green)}
+.grid-btn svg{display:block}
+.grid-btn.active rect,.grid-btn.active path{fill:var(--green)}
+.grid-btn rect,.grid-btn path{fill:var(--ink-mid);transition:fill .2s}
+
+/* CASES GRID MODES */
+.cases{padding:32px 48px 100px}
+.cases.cols-1 .pair{max-width:960px;margin-left:auto;margin-right:auto}
+.cases.cols-1 .pair-meta{max-width:960px;margin-left:auto;margin-right:auto}
+
+.cases.cols-2{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:32px;padding:32px 48px 100px;
+}
+.cases.cols-2 .pair-wrap{margin:0}
+.cases.cols-2 .pair{max-width:100%;margin:0}
+.cases.cols-2 .pair-meta{max-width:100%;margin-left:0;margin-right:0}
+
+.cases.cols-3{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:24px;padding:32px 32px 100px;
+}
+.cases.cols-3 .pair-wrap{margin:0}
+.cases.cols-3 .pair{max-width:100%;margin:0}
+.cases.cols-3 .pair-meta{max-width:100%;margin-left:0;margin-right:0}
+
+@media(max-width:900px){
+  .cases.cols-3{grid-template-columns:1fr 1fr;gap:20px}
+}
+@media(max-width:600px){
+  .cases.cols-2,.cases.cols-3{grid-template-columns:1fr;gap:16px}
+  .tabs-bar{padding:0 20px}
+}
 footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;background:var(--bg)}
 .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;display:flex;align-items:center;gap:8px;color:var(--ink-mid)}
 .footer-email{font-size:10px;color:var(--ink-mid);text-decoration:none;letter-spacing:.03em;border-bottom:1px solid var(--line);padding-bottom:1px;transition:color .2s,border-color .2s}
@@ -269,14 +306,14 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
   header,footer,.intro-left,.cases,.tabs-wrap{padding-left:20px;padding-right:20px}
   .intro{grid-template-columns:1fr;min-height:auto}
   .intro-right{display:none}
-  .cases.view-all{grid-template-columns:1fr 1fr;padding:0 0 80px}
+
   .lb-images{flex-direction:column;max-height:none}
   .lb-side{max-width:90vw}
   .lb-side img{height:40vh;width:90vw;max-width:90vw}
 }
 @media(max-width:480px){
   .pair-arrow{width:30px;height:30px;font-size:11px}
-  .cases.view-all{grid-template-columns:1fr}
+
 }
 </style>
 </head>
@@ -295,7 +332,7 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
     <h1 class="intro-title" id="intro-title"></h1>
     <div class="intro-bottom">
       <p class="intro-desc" id="intro-desc"></p>
-      <div class="intro-count"><span id="case-count">0</span> cases below</div>
+
     </div>
   </div>
   <div class="intro-right">
@@ -312,7 +349,23 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
   </div>
 </div>
 
-<div class="tabs-wrap"><div class="tabs" id="tabs"></div></div>
+<div class="tabs-bar">
+  <div class="tabs" id="tabs"></div>
+  <div class="grid-switcher">
+    <!-- 1 col -->
+    <button class="grid-btn active" id="grid-1" title="1 column">
+      <svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="5" rx="1"/><rect x="1" y="8" width="12" height="5" rx="1"/></svg>
+    </button>
+    <!-- 2 col -->
+    <button class="grid-btn" id="grid-2" title="2 columns">
+      <svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="5" height="12" rx="1"/><rect x="8" y="1" width="5" height="12" rx="1"/></svg>
+    </button>
+    <!-- 3 col -->
+    <button class="grid-btn" id="grid-3" title="3 columns">
+      <svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="3" height="12" rx="1"/><rect x="5.5" y="1" width="3" height="12" rx="1"/><rect x="10" y="1" width="3" height="12" rx="1"/></svg>
+    </button>
+  </div>
+</div>
 
 <div class="cases" id="cases"></div>
 
@@ -368,6 +421,17 @@ const countEl=document.getElementById('case-count');
 const allTags=['All',...new Set(CASES.map(c=>c.tag))];
 let activeTab='All', currentFiltered=[...CASES], lbCur=0, lbAfterIdx=0;
 
+// ── GRID SWITCHER ──
+let currentCols=1;
+casesEl.classList.add('cols-1');
+[1,2,3].forEach(n=>{
+  document.getElementById('grid-'+n).addEventListener('click',()=>{
+    currentCols=n;
+    [1,2,3].forEach(x=>document.getElementById('grid-'+x).classList.toggle('active',x===n));
+    casesEl.className='cases cols-'+n;
+  });
+});
+
 allTags.forEach(tag=>{
   const btn=document.createElement('button');
   btn.className='tab'+(tag==='All'?' active':'');
@@ -378,8 +442,7 @@ allTags.forEach(tag=>{
 
 function switchTab(tag,updateHash=true){
   activeTab=tag;
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.textContent===tag));
-  currentFiltered=tag==='All'?[...CASES]:CASES.filter(c=>c.tag===tag);
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.textContent===tag));  currentFiltered=tag==='All'?[...CASES]:CASES.filter(c=>c.tag===tag);
   countEl.textContent=currentFiltered.length;
   renderCases(currentFiltered);
   if(updateHash){const hash=tag==='All'?'':'#'+tag.toLowerCase().replace(/ /g,'-');history.replaceState(null,'',hash||window.location.pathname);}
@@ -387,7 +450,7 @@ function switchTab(tag,updateHash=true){
 
 function renderCases(list){
   casesEl.style.opacity='0'; casesEl.style.transform='translateY(8px)'; casesEl.style.transition='opacity .25s ease,transform .25s ease';
-  activeTab==='All'?casesEl.classList.add('view-all'):casesEl.classList.remove('view-all');
+  casesEl.className='cases cols-'+currentCols;
   setTimeout(()=>{
     casesEl.innerHTML='';
     list.forEach((c,i)=>{
@@ -477,6 +540,7 @@ function getTabFromHash(){const hash=window.location.hash.replace('#','').replac
 const initialTab=getTabFromHash();
 document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.textContent===initialTab));
 currentFiltered=initialTab==='All'?[...CASES]:CASES.filter(c=>c.tag===initialTab);
+activeTab=initialTab;
 countEl.textContent=currentFiltered.length;
 renderCases(currentFiltered);
 window.addEventListener('hashchange',()=>switchTab(getTabFromHash(),false));
