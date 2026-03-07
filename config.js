@@ -55,7 +55,7 @@ const FONT_HEADING = "'Cormorant Garamond', serif";
 const FONT_BODY    = "'DM Mono', monospace";
 
 // Font sizes (any valid CSS value: px, rem, clamp(), etc.)
-const FONT_SIZE_BODY    = "10px";
+const FONT_SIZE_BODY    = "13px";
 const FONT_SIZE_HERO    = "clamp(3rem,6vw,5.5rem)";
 const FONT_SIZE_SECTION = "clamp(2rem,4vw,3.2rem)";
 

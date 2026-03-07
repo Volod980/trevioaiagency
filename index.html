@@ -13,14 +13,14 @@
   --bg2:#0c0c0c;
   --bg3:#141414;
   --ink:#f0ede8;
-  --ink-mid:#555;
+  --ink-mid:#8a8a8a;
   --ink-light:#2a2a2a;
   --green:#3ecf3e;
   --line:rgba(255,255,255,0.07);
   /* Typography — controlled via config.js */
   --font-heading:'Cormorant Garamond',serif;
   --font-body:'DM Mono',monospace;
-  --font-size-body:10px;
+  --font-size-body:13px;
   --font-size-hero:clamp(3rem,6vw,5.5rem);
   --font-size-section:clamp(2rem,4vw,3.2rem);
   --font-weight-heading:300;
@@ -63,7 +63,7 @@ header{
 /* Nav — no borders, underline-only style */
 .header-nav{display:flex;gap:24px;align-items:center}
 .nav-btn{
-  font-family:var(--font-body);font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  font-family:var(--font-body);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
   background:none;border:none;color:var(--ink-mid);cursor:none;text-decoration:none;
   padding:3px 0;position:relative;transition:color .2s;
 }
@@ -113,7 +113,7 @@ header{
 .tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;user-select:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
-  font-family:var(--font-body);font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  font-family:var(--font-body);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink-mid);padding:20px 24px;
   cursor:none;white-space:nowrap;background:none;border:none;
   position:relative;transition:color .25s;touch-action:manipulation;
@@ -187,11 +187,18 @@ header{
   margin-bottom:40px;
 }
 .pair-label-cell{
-  padding:8px 18px;background:var(--bg2);
-  font-family:var(--font-body);font-size:8px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--ink-mid);
+  padding:16px 20px;background:var(--bg2);
+  font-family:var(--font-body);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink);display:flex;align-items:center;gap:10px;
+  transition:background .2s;
 }
-.pair-label-cell.ai-label{color:var(--green);text-align:right}
+.pair-label-cell::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;
+}
+.pair-label-cell.ai-label{
+  color:var(--green);justify-content:flex-end;flex-direction:row-reverse;
+}
+.pair-label-cell.ai-label::before{background:var(--green);opacity:.7}
 
 /* ── GRID SWITCHER ──────────────────────────────────────────── */
 .grid-switcher{display:flex;gap:2px;align-items:center;padding:20px 0}
@@ -287,26 +294,38 @@ header{
 .footer-brand-desc{font-size:9px;line-height:1.9;color:var(--ink-mid);letter-spacing:.04em}
 .footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
 .footer-col-title{
-  font-family:var(--font-body);font-size:8px;letter-spacing:.3em;text-transform:uppercase;
+  font-family:var(--font-body);font-size:10px;letter-spacing:.25em;text-transform:uppercase;
   color:var(--ink);margin-bottom:18px;
 }
 .footer-col-link{
-  display:block;font-size:9px;color:var(--ink-mid);text-decoration:none;
-  letter-spacing:.04em;padding:4px 0;transition:color .2s;
+  display:block;font-size:12px;color:var(--ink-mid);text-decoration:none;
+  letter-spacing:.06em;padding:5px 0;transition:color .2s;
 }
 .footer-col-link:hover{color:var(--green)}
 .footer-bottom{
   display:flex;justify-content:space-between;align-items:center;padding:18px 0;
 }
-.footer-copy{font-size:9px;color:var(--ink-light);letter-spacing:.1em}
-.footer-socials{display:flex;gap:8px}
-.footer-social-btn{
-  width:36px;height:36px;border:1px solid var(--line);border-radius:50%;
-  background:none;display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-body);font-size:7px;letter-spacing:.08em;
-  color:var(--ink-mid);text-decoration:none;transition:all .2s;
+.footer-copy{font-size:11px;color:var(--ink-mid);letter-spacing:.08em}
+.footer-brand-desc{font-size:12px;line-height:1.9;color:var(--ink-mid);letter-spacing:.04em}
+
+/* ── SCROLL TO TOP ──────────────────────────────────────────── */
+.scroll-top-btn{
+  position:fixed;bottom:36px;right:36px;
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.15);
+  color:var(--ink);cursor:none;
+  display:flex;align-items:center;justify-content:center;
+  z-index:9000;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s,border-color .2s,color .2s,background .2s,transform .2s;
+  backdrop-filter:blur(8px);
 }
-.footer-social-btn:hover{border-color:var(--green);color:var(--green)}
+.scroll-top-btn.visible{opacity:1;pointer-events:all}
+.scroll-top-btn:hover{
+  border-color:var(--green);color:var(--green);
+  background:rgba(0,0,0,.9);transform:translateY(-3px);
+}
+@media(hover:none){.scroll-top-btn{cursor:auto}}
 
 /* ── RESPONSIVE ─────────────────────────────────────────────── */
 @media(max-width:900px){
@@ -409,9 +428,14 @@ header{
   </div>
   <div class="footer-bottom">
     <div class="footer-copy" id="footer-copy-el"></div>
-    <div class="footer-socials" id="footer-socials"></div>
   </div>
 </footer>
+
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M9 13V5M5 9l4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
 
 <!-- ── LIGHTBOX ── -->
 <div class="lb" id="lb">
@@ -502,17 +526,13 @@ if (typeof FOOTER_COLUMNS !== 'undefined') {
   });
 }
 
-if (typeof FOOTER_SOCIALS !== 'undefined') {
-  var socEl = document.getElementById('footer-socials');
-  FOOTER_SOCIALS.forEach(function(s) {
-    var a = document.createElement('a');
-    a.href = s.href; a.className = 'footer-social-btn';
-    a.setAttribute('aria-label', s.label);
-    a.innerHTML = s.icon;
-    if (s.href !== '#') { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
-    socEl.appendChild(a);
-  });
-}
+// ── SCROLL TO TOP ────────────────────────────────────────────────
+var scrollBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', function(){
+  if(window.scrollY > 400) scrollBtn.classList.add('visible');
+  else scrollBtn.classList.remove('visible');
+}, {passive:true});
+scrollBtn.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
 
 // ── HERO PHOTOS ─────────────────────────────────────────────────
 // To change hero photos update the paths below (or move them to config.js)
