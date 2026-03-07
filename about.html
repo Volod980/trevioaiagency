@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trevio — About Us</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#000;
+  --bg2:#0c0c0c;
+  --bg3:#141414;
+  --ink:#f0ede8;
+  --ink-mid:#555;
+  --ink-light:#2a2a2a;
+  --green:#3ecf3e;
+  --line:rgba(255,255,255,0.07);
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'DM Mono',monospace;font-weight:300;overflow-x:hidden;cursor:none}
+
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:100;
+}
+
+/* CURSOR */
+.cur-dot{width:5px;height:5px;background:var(--green);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99999;transition:width .2s,height .2s,opacity .2s}
+.cur-ring{width:28px;height:28px;border:1px solid rgba(62,207,62,.3);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99998;transition:width .3s,height .3s,border-color .3s}
+@media(hover:none){.cur-dot,.cur-ring{display:none!important}body{cursor:auto!important}}
+
+/* HEADER */
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:28px 48px;
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;
+  background:rgba(0,0,0,.92);backdrop-filter:blur(12px);
+  z-index:100;
+}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;letter-spacing:.1em;display:flex;align-items:center;gap:9px;color:var(--ink);text-decoration:none}
+.logo-diamond{width:7px;height:7px;background:var(--green);transform:rotate(45deg);flex-shrink:0}
+.logo-img{height:30px;display:block;width:auto}
+.header-tag{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-mid)}
+.header-nav{display:flex;gap:6px;align-items:center}
+.nav-btn{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  padding:7px 16px;
+  border:1px solid var(--line);background:none;
+  color:var(--ink-mid);cursor:none;text-decoration:none;
+  transition:color .2s,border-color .2s;border-radius:2px;white-space:nowrap;
+}
+.nav-btn:hover{border-color:rgba(255,255,255,.2);color:var(--ink)}
+.nav-btn.active{border-color:var(--ink-light);color:var(--ink)}
+@media(hover:none){.nav-btn{cursor:auto}}
+
+/* ABOUT HERO */
+.about-hero{
+  padding:96px 48px 80px;
+  border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:48px;align-items:end;
+}
+.about-hero-label{
+  font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--green);
+  margin-bottom:24px;
+}
+.about-hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.2rem,7vw,6rem);
+  font-weight:300;line-height:.88;letter-spacing:-.02em;color:var(--ink);
+}
+.about-hero-title em{font-style:italic;color:var(--green)}
+.about-hero-right{
+  display:flex;flex-direction:column;gap:20px;padding-bottom:8px;
+}
+.about-hero-desc{
+  font-size:10px;line-height:2;color:var(--ink-mid);max-width:420px;
+}
+
+/* SECTION BASE */
+.about-section{
+  border-bottom:1px solid var(--line);
+  padding:72px 48px;
+}
+.section-label{
+  font-size:8px;letter-spacing:.35em;text-transform:uppercase;color:var(--green);
+  margin-bottom:32px;display:flex;align-items:center;gap:12px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:300;line-height:1.05;letter-spacing:-.01em;color:var(--ink);
+  margin-bottom:28px;
+}
+.section-body{
+  font-size:10px;line-height:2.1;color:var(--ink-mid);max-width:640px;
+}
+
+/* WHO WE ARE + WHAT WE DO — two column */
+.about-two-col{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  border-bottom:1px solid var(--line);background:var(--line);
+}
+.about-col{
+  padding:72px 48px;background:var(--bg);
+}
+.about-col:first-child{border-right:none}
+
+/* OUR VALUE — accent block */
+.about-value{
+  padding:96px 48px;
+  border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+}
+.value-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,5vw,4.5rem);
+  font-weight:300;line-height:.9;letter-spacing:-.02em;color:var(--ink);
+}
+.value-headline em{font-style:italic;color:var(--green)}
+.value-body{font-size:10px;line-height:2.1;color:var(--ink-mid)}
+
+/* WHY WORK WITH US — list */
+.about-why{padding:72px 48px;border-bottom:1px solid var(--line)}
+.why-list{list-style:none;display:flex;flex-direction:column;gap:1px;margin-top:40px}
+.why-item{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:20px 0;
+  border-top:1px solid var(--line);
+}
+.why-item:last-child{border-bottom:1px solid var(--line)}
+.why-diamond{width:6px;height:6px;background:var(--green);transform:rotate(45deg);flex-shrink:0;margin-top:4px}
+.why-text{font-size:10px;line-height:1.9;color:var(--ink-mid)}
+
+/* OUR PROCESS — steps */
+.about-process{padding:72px 48px;border-bottom:1px solid var(--line)}
+.process-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--line);
+  margin-top:48px;
+}
+.process-step{
+  padding:40px 36px;background:var(--bg2);
+  opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;
+}
+.process-step.visible{opacity:1;transform:translateY(0)}
+.step-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3.5rem;font-weight:300;color:var(--ink-light);
+  line-height:1;margin-bottom:20px;letter-spacing:-.02em;
+}
+.step-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:400;color:var(--ink);
+  margin-bottom:12px;letter-spacing:.02em;
+}
+.step-desc{font-size:9.5px;line-height:2;color:var(--ink-mid)}
+
+/* CTA */
+.about-cta{
+  padding:96px 48px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;gap:40px;
+}
+.cta-eyebrow{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-mid)}
+.cta-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,5vw,4rem);
+  font-weight:300;line-height:.92;letter-spacing:-.02em;color:var(--ink);
+}
+.cta-headline em{font-style:italic;color:var(--green)}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  padding:16px 36px;
+  border:1px solid rgba(255,255,255,.18);
+  background:none;color:var(--ink);
+  text-decoration:none;cursor:none;
+  transition:border-color .25s,color .25s,box-shadow .25s;
+  border-radius:2px;
+}
+.cta-btn:hover{border-color:var(--green);color:var(--green);box-shadow:0 0 28px rgba(62,207,62,.1)}
+.cta-arrow{transition:transform .25s}
+.cta-btn:hover .cta-arrow{transform:translateX(4px)}
+@media(hover:none){.cta-btn{cursor:auto}}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;background:var(--bg)}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;display:flex;align-items:center;gap:8px;color:var(--ink-mid)}
+.footer-email{font-size:10px;color:var(--ink-mid);text-decoration:none;letter-spacing:.03em;border-bottom:1px solid var(--line);padding-bottom:1px;transition:color .2s,border-color .2s}
+.footer-email:hover{color:var(--green);border-color:var(--green)}
+.footer-copy{font-size:9px;color:var(--ink-light);letter-spacing:.1em}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  header,footer,.about-hero,.about-col,.about-value,.about-why,.about-process,.about-cta,.about-section{padding-left:20px;padding-right:20px}
+  .about-hero{grid-template-columns:1fr;padding-top:56px;padding-bottom:56px;gap:32px}
+  .about-two-col{grid-template-columns:1fr}
+  .about-value{grid-template-columns:1fr;padding-top:64px;padding-bottom:64px}
+  .process-grid{grid-template-columns:1fr}
+  .about-hero-title{font-size:clamp(2.8rem,10vw,4.5rem)}
+  .header-tag{display:none}
+}
+@media(max-width:480px){
+  header{padding:20px}
+  .logo{font-size:1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<header>
+  <a href="index.html" class="logo" id="site-logo"><div class="logo-diamond"></div><span id="logo-text">Trevio</span></a>
+  <div class="header-tag" id="header-tag-el"></div>
+  <nav class="header-nav">
+    <a href="about.html" class="nav-btn active" id="nav-about">About Us</a>
+    <a href="index.html" class="nav-btn" id="nav-portfolio">Portfolio</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div>
+    <p class="about-hero-label" id="about-hero-label">About Us</p>
+    <h1 class="about-hero-title" id="about-hero-title"></h1>
+  </div>
+  <div class="about-hero-right">
+    <p class="about-hero-desc" id="about-hero-desc"></p>
+  </div>
+</section>
+
+<!-- WHO WE ARE + WHAT WE DO -->
+<div class="about-two-col">
+  <div class="about-col">
+    <p class="section-label" id="who-label"></p>
+    <h2 class="section-title" id="who-title"></h2>
+    <p class="section-body" id="who-text"></p>
+  </div>
+  <div class="about-col">
+    <p class="section-label" id="what-label"></p>
+    <h2 class="section-title" id="what-title"></h2>
+    <p class="section-body" id="what-text"></p>
+  </div>
+</div>
+
+<!-- OUR VALUE -->
+<section class="about-value">
+  <div>
+    <p class="section-label" id="value-label"></p>
+    <div class="value-headline" id="value-headline"></div>
+  </div>
+  <div>
+    <p class="value-body" id="value-body"></p>
+  </div>
+</section>
+
+<!-- WHY WORK WITH US -->
+<section class="about-why">
+  <p class="section-label" id="why-label"></p>
+  <h2 class="section-title" id="why-title"></h2>
+  <ul class="why-list" id="why-list"></ul>
+</section>
+
+<!-- OUR PROCESS -->
+<section class="about-process">
+  <p class="section-label" id="process-label"></p>
+  <h2 class="section-title" id="process-title"></h2>
+  <div class="process-grid" id="process-grid"></div>
+</section>
+
+<!-- CTA -->
+<section class="about-cta">
+  <p class="cta-eyebrow">Ready to see the results?</p>
+  <h2 class="cta-headline">One photo.<br><em>Infinite visuals.</em></h2>
+  <a href="#" class="cta-btn" id="cta-link"><span id="cta-text">View Our Portfolio</span><span class="cta-arrow">→</span></a>
+</section>
+
+<footer>
+  <div class="footer-logo" id="footer-logo-el"><div class="logo-diamond"></div><span id="footer-logo-text">Trevio</span></div>
+  <a href="#" class="footer-email" id="footer-email-el"></a>
+  <div class="footer-copy" id="footer-copy-el"></div>
+</footer>
+
+<script src="config.js"></script>
+<script>
+// ── PAGE TITLE ──
+document.title = ABOUT_PAGE_TITLE;
+
+// ── LOGO ──
+(function(){
+  const logoEl = document.getElementById('site-logo');
+  const footerLogoEl = document.getElementById('footer-logo-el');
+  if (LOGO) {
+    document.getElementById('logo-text').style.display = 'none';
+    document.querySelector('#site-logo .logo-diamond').style.display = 'none';
+    const img = document.createElement('img');
+    img.src = LOGO; img.alt = BRAND_NAME; img.className = 'logo-img';
+    logoEl.prepend(img);
+    footerLogoEl.innerHTML = `<img src="${LOGO}" alt="${BRAND_NAME}" class="logo-img" style="height:22px">`;
+  } else {
+    document.getElementById('logo-text').textContent = BRAND_NAME;
+    document.getElementById('footer-logo-text').textContent = BRAND_NAME;
+  }
+})();
+
+// ── HEADER TAG & FOOTER ──
+document.getElementById('header-tag-el').textContent = HEADER_TAG;
+const footerEmailEl = document.getElementById('footer-email-el');
+footerEmailEl.textContent = FOOTER_EMAIL;
+footerEmailEl.href = 'mailto:' + FOOTER_EMAIL;
+document.getElementById('footer-copy-el').textContent = FOOTER_COPY;
+
+// ── HERO ──
+document.getElementById('about-hero-title').innerHTML =
+  ABOUT_WHO_TITLE.split(' ').slice(0,1).join(' ') + '<br><em>' + 'We Are' + '</em>';
+// Use a proper intro derived from config
+document.getElementById('about-hero-title').innerHTML =
+  'Who<br><em>We Are</em>';
+document.getElementById('about-hero-desc').textContent = ABOUT_WHO_TEXT;
+
+// ── WHO WE ARE ──
+document.getElementById('who-label').textContent = ABOUT_WHO_TITLE;
+document.getElementById('who-title').textContent = ABOUT_WHO_TITLE;
+document.getElementById('who-text').textContent = ABOUT_WHO_TEXT;
+
+// ── WHAT WE DO ──
+document.getElementById('what-label').textContent = ABOUT_WHAT_TITLE;
+document.getElementById('what-title').textContent = ABOUT_WHAT_TITLE;
+document.getElementById('what-text').textContent = ABOUT_WHAT_TEXT;
+
+// ── OUR VALUE ──
+document.getElementById('value-label').textContent = ABOUT_VALUE_TITLE;
+document.getElementById('value-headline').innerHTML =
+  ABOUT_VALUE_HEADLINE.replace(/(Infinite visuals\.)/i, '<em>$1</em>');
+document.getElementById('value-body').textContent = ABOUT_VALUE_TEXT;
+
+// ── WHY WORK WITH US ──
+document.getElementById('why-label').textContent = ABOUT_WHY_TITLE;
+document.getElementById('why-title').textContent = ABOUT_WHY_TITLE;
+const whyList = document.getElementById('why-list');
+ABOUT_WHY_ITEMS.forEach(function(item) {
+  const li = document.createElement('li');
+  li.className = 'why-item';
+  li.innerHTML = '<div class="why-diamond"></div><span class="why-text">' + item + '</span>';
+  whyList.appendChild(li);
+});
+
+// ── OUR PROCESS ──
+document.getElementById('process-label').textContent = ABOUT_PROCESS_TITLE;
+document.getElementById('process-title').textContent = ABOUT_PROCESS_TITLE;
+const processGrid = document.getElementById('process-grid');
+ABOUT_PROCESS_STEPS.forEach(function(step, i) {
+  const el = document.createElement('div');
+  el.className = 'process-step';
+  el.style.transitionDelay = (i * 0.1) + 's';
+  el.innerHTML =
+    '<div class="step-num">' + step.label + '</div>' +
+    '<h3 class="step-title">' + step.title + '</h3>' +
+    '<p class="step-desc">' + step.desc + '</p>';
+  processGrid.appendChild(el);
+});
+
+// ── CTA ──
+document.getElementById('cta-text').textContent = ABOUT_CTA_TEXT;
+document.getElementById('cta-link').href = ABOUT_CTA_LINK;
+
+// ── SCROLL ANIMATIONS ──
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.process-step').forEach(function(el) {
+  observer.observe(el);
+});
+
+// ── CURSOR ──
+const dot = document.getElementById('curDot');
+const ring = document.getElementById('curRing');
+if (window.matchMedia('(hover: hover)').matches) {
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  });
+  (function animRing() {
+    rx += (mx - rx) * .12; ry += (my - ry) * .12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  })();
+}
+</script>
+</body>
+</html>
