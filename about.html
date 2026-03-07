@@ -17,10 +17,17 @@
   --ink-light:#2a2a2a;
   --green:#3ecf3e;
   --line:rgba(255,255,255,0.07);
+  --font-heading:'Cormorant Garamond',serif;
+  --font-body:'DM Mono',monospace;
+  --font-size-body:10px;
+  --font-size-hero:clamp(3rem,6vw,5.5rem);
+  --font-size-section:clamp(2rem,4vw,3.2rem);
+  --font-weight-heading:300;
+  --letter-spacing-heading:-.02em;
 }
 
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:'DM Mono',monospace;font-weight:300;overflow-x:hidden;cursor:none}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-weight:300;overflow-x:hidden;cursor:none}
 
 body::after{
   content:'';position:fixed;inset:0;
@@ -28,122 +35,105 @@ body::after{
   pointer-events:none;z-index:100;
 }
 
-/* CURSOR */
-.cur-dot{width:5px;height:5px;background:var(--green);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99999;transition:width .2s,height .2s,opacity .2s}
-.cur-ring{width:28px;height:28px;border:1px solid rgba(62,207,62,.3);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99998;transition:width .3s,height .3s,border-color .3s}
+/* ── CURSOR ─────────────────────────────────────────────────── */
+.cur-dot{width:5px;height:5px;background:var(--green);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99999}
+.cur-ring{width:28px;height:28px;border:1px solid rgba(62,207,62,.35);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99998;transition:width .25s,height .25s,border-color .25s}
 @media(hover:none){.cur-dot,.cur-ring{display:none!important}body{cursor:auto!important}}
 
-/* HEADER */
+/* ── HEADER ─────────────────────────────────────────────────── */
 header{
   display:flex;justify-content:space-between;align-items:center;
-  padding:28px 48px;
-  border-bottom:1px solid var(--line);
+  padding:22px 48px;border-bottom:1px solid var(--line);
   position:sticky;top:0;
   background:rgba(0,0,0,.92);backdrop-filter:blur(12px);
-  z-index:100;
+  z-index:500;
 }
-.logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;letter-spacing:.1em;display:flex;align-items:center;gap:9px;color:var(--ink);text-decoration:none}
-.logo-diamond{width:7px;height:7px;background:var(--green);transform:rotate(45deg);flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
 .logo-img{height:30px;display:block;width:auto}
-.header-tag{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-mid)}
-.header-nav{display:flex;gap:6px;align-items:center}
-.nav-btn{
-  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
-  padding:7px 16px;
-  border:1px solid var(--line);background:none;
-  color:var(--ink-mid);cursor:none;text-decoration:none;
-  transition:color .2s,border-color .2s;border-radius:2px;white-space:nowrap;
+.logo-mark-text{
+  font-family:var(--font-body);font-size:.95rem;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--ink);
 }
-.nav-btn:hover{border-color:rgba(255,255,255,.2);color:var(--ink)}
-.nav-btn.active{border-color:var(--ink-light);color:var(--ink)}
+.header-nav{display:flex;gap:24px;align-items:center}
+.nav-btn{
+  font-family:var(--font-body);font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  background:none;border:none;color:var(--ink-mid);cursor:none;text-decoration:none;
+  padding:3px 0;position:relative;transition:color .2s;
+}
+.nav-btn::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;
+  background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .25s;
+}
+.nav-btn:hover{color:var(--ink)}
+.nav-btn.active{color:var(--ink)}
+.nav-btn.active::after,.nav-btn:hover::after{transform:scaleX(1)}
 @media(hover:none){.nav-btn{cursor:auto}}
 
-/* ABOUT HERO */
+/* ── ABOUT HERO ─────────────────────────────────────────────── */
 .about-hero{
-  padding:96px 48px 80px;
-  border-bottom:1px solid var(--line);
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:48px;align-items:end;
+  padding:96px 48px 80px;border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;
 }
 .about-hero-label{
-  font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--green);
-  margin-bottom:24px;
+  font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--green);margin-bottom:24px;
 }
 .about-hero-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(3.2rem,7vw,6rem);
-  font-weight:300;line-height:.88;letter-spacing:-.02em;color:var(--ink);
+  font-family:var(--font-heading);
+  font-size:var(--font-size-hero);
+  font-weight:var(--font-weight-heading);
+  line-height:.88;letter-spacing:var(--letter-spacing-heading);color:var(--ink);
 }
 .about-hero-title em{font-style:italic;color:var(--green)}
-.about-hero-right{
-  display:flex;flex-direction:column;gap:20px;padding-bottom:8px;
-}
-.about-hero-desc{
-  font-size:10px;line-height:2;color:var(--ink-mid);max-width:420px;
-}
+.about-hero-desc{font-size:var(--font-size-body);line-height:2.1;color:var(--ink-mid);max-width:440px;padding-bottom:8px}
 
-/* SECTION BASE */
-.about-section{
-  border-bottom:1px solid var(--line);
-  padding:72px 48px;
-}
+/* ── SECTION BASE ───────────────────────────────────────────── */
 .section-label{
   font-size:8px;letter-spacing:.35em;text-transform:uppercase;color:var(--green);
-  margin-bottom:32px;display:flex;align-items:center;gap:12px;
+  margin-bottom:28px;display:flex;align-items:center;gap:12px;
 }
 .section-label::after{content:'';flex:1;height:1px;background:var(--line)}
 .section-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2rem,4vw,3.2rem);
-  font-weight:300;line-height:1.05;letter-spacing:-.01em;color:var(--ink);
-  margin-bottom:28px;
+  font-family:var(--font-heading);
+  font-size:var(--font-size-section);
+  font-weight:var(--font-weight-heading);
+  line-height:1.05;letter-spacing:var(--letter-spacing-heading);color:var(--ink);margin-bottom:24px;
 }
-.section-body{
-  font-size:10px;line-height:2.1;color:var(--ink-mid);max-width:640px;
-}
+.section-body{font-size:var(--font-size-body);line-height:2.1;color:var(--ink-mid);max-width:560px}
 
-/* WHO WE ARE + WHAT WE DO — two column */
+/* ── WHO WE ARE + WHAT WE DO — two columns ──────────────────── */
 .about-two-col{
   display:grid;grid-template-columns:1fr 1fr;gap:1px;
   border-bottom:1px solid var(--line);background:var(--line);
 }
-.about-col{
-  padding:72px 48px;background:var(--bg);
-}
-.about-col:first-child{border-right:none}
+.about-col{padding:72px 48px;background:var(--bg)}
 
-/* OUR VALUE — accent block */
+/* ── OUR VALUE ──────────────────────────────────────────────── */
 .about-value{
-  padding:96px 48px;
-  border-bottom:1px solid var(--line);
+  padding:96px 48px;border-bottom:1px solid var(--line);
   display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
 }
 .value-headline{
-  font-family:'Cormorant Garamond',serif;
+  font-family:var(--font-heading);
   font-size:clamp(2.8rem,5vw,4.5rem);
-  font-weight:300;line-height:.9;letter-spacing:-.02em;color:var(--ink);
+  font-weight:var(--font-weight-heading);
+  line-height:.9;letter-spacing:var(--letter-spacing-heading);color:var(--ink);
 }
 .value-headline em{font-style:italic;color:var(--green)}
-.value-body{font-size:10px;line-height:2.1;color:var(--ink-mid)}
+.value-body{font-size:var(--font-size-body);line-height:2.1;color:var(--ink-mid)}
 
-/* WHY WORK WITH US — list */
+/* ── WHY WORK WITH US ───────────────────────────────────────── */
 .about-why{padding:72px 48px;border-bottom:1px solid var(--line)}
-.why-list{list-style:none;display:flex;flex-direction:column;gap:1px;margin-top:40px}
-.why-item{
-  display:flex;align-items:flex-start;gap:20px;
-  padding:20px 0;
-  border-top:1px solid var(--line);
-}
+.why-list{list-style:none;display:flex;flex-direction:column;gap:0;margin-top:40px}
+.why-item{display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-top:1px solid var(--line)}
 .why-item:last-child{border-bottom:1px solid var(--line)}
 .why-diamond{width:6px;height:6px;background:var(--green);transform:rotate(45deg);flex-shrink:0;margin-top:4px}
-.why-text{font-size:10px;line-height:1.9;color:var(--ink-mid)}
+.why-text{font-size:var(--font-size-body);line-height:1.9;color:var(--ink-mid)}
 
-/* OUR PROCESS — steps */
+/* ── OUR PROCESS ────────────────────────────────────────────── */
 .about-process{padding:72px 48px;border-bottom:1px solid var(--line)}
 .process-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:1px;background:var(--line);
-  margin-top:48px;
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--line);margin-top:48px;
 }
 .process-step{
   padding:40px 36px;background:var(--bg2);
@@ -151,18 +141,13 @@ header{
 }
 .process-step.visible{opacity:1;transform:translateY(0)}
 .step-num{
-  font-family:'Cormorant Garamond',serif;
-  font-size:3.5rem;font-weight:300;color:var(--ink-light);
-  line-height:1;margin-bottom:20px;letter-spacing:-.02em;
+  font-family:var(--font-heading);font-size:3.5rem;font-weight:300;
+  color:var(--ink-light);line-height:1;margin-bottom:20px;letter-spacing:-.02em;
 }
-.step-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.2rem;font-weight:400;color:var(--ink);
-  margin-bottom:12px;letter-spacing:.02em;
-}
+.step-title{font-family:var(--font-heading);font-size:1.2rem;font-weight:400;color:var(--ink);margin-bottom:12px;letter-spacing:.02em}
 .step-desc{font-size:9.5px;line-height:2;color:var(--ink-mid)}
 
-/* CTA */
+/* ── CTA ────────────────────────────────────────────────────── */
 .about-cta{
   padding:96px 48px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -170,46 +155,70 @@ header{
 }
 .cta-eyebrow{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-mid)}
 .cta-headline{
-  font-family:'Cormorant Garamond',serif;
+  font-family:var(--font-heading);
   font-size:clamp(2.5rem,5vw,4rem);
-  font-weight:300;line-height:.92;letter-spacing:-.02em;color:var(--ink);
+  font-weight:var(--font-weight-heading);
+  line-height:.92;letter-spacing:var(--letter-spacing-heading);color:var(--ink);
 }
 .cta-headline em{font-style:italic;color:var(--green)}
 .cta-btn{
   display:inline-flex;align-items:center;gap:12px;
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
-  padding:16px 36px;
-  border:1px solid rgba(255,255,255,.18);
-  background:none;color:var(--ink);
-  text-decoration:none;cursor:none;
-  transition:border-color .25s,color .25s,box-shadow .25s;
-  border-radius:2px;
+  font-family:var(--font-body);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  padding:16px 36px;border:1px solid rgba(255,255,255,.18);
+  background:none;color:var(--ink);text-decoration:none;cursor:none;
+  transition:border-color .25s,color .25s,box-shadow .25s;border-radius:2px;
 }
 .cta-btn:hover{border-color:var(--green);color:var(--green);box-shadow:0 0 28px rgba(62,207,62,.1)}
 .cta-arrow{transition:transform .25s}
 .cta-btn:hover .cta-arrow{transform:translateX(4px)}
 @media(hover:none){.cta-btn{cursor:auto}}
 
-/* FOOTER */
-footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-content:space-between;align-items:center;background:var(--bg)}
-.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;display:flex;align-items:center;gap:8px;color:var(--ink-mid)}
-.footer-email{font-size:10px;color:var(--ink-mid);text-decoration:none;letter-spacing:.03em;border-bottom:1px solid var(--line);padding-bottom:1px;transition:color .2s,border-color .2s}
-.footer-email:hover{color:var(--green);border-color:var(--green)}
-.footer-copy{font-size:9px;color:var(--ink-light);letter-spacing:.1em}
-
-/* RESPONSIVE */
-@media(max-width:768px){
-  header,footer,.about-hero,.about-col,.about-value,.about-why,.about-process,.about-cta,.about-section{padding-left:20px;padding-right:20px}
-  .about-hero{grid-template-columns:1fr;padding-top:56px;padding-bottom:56px;gap:32px}
-  .about-two-col{grid-template-columns:1fr}
-  .about-value{grid-template-columns:1fr;padding-top:64px;padding-bottom:64px}
-  .process-grid{grid-template-columns:1fr}
-  .about-hero-title{font-size:clamp(2.8rem,10vw,4.5rem)}
-  .header-tag{display:none}
+/* ── FOOTER ─────────────────────────────────────────────────── */
+.site-footer{border-top:1px solid var(--line);background:var(--bg);padding:64px 48px 0}
+.footer-top{
+  display:grid;grid-template-columns:220px 1fr;gap:64px;
+  padding-bottom:52px;border-bottom:1px solid var(--line);
 }
-@media(max-width:480px){
-  header{padding:20px}
-  .logo{font-size:1rem}
+.footer-brand{display:flex;flex-direction:column;gap:16px}
+.footer-logo-wrap{display:flex;align-items:center;gap:9px}
+.footer-brand-desc{font-size:9px;line-height:1.9;color:var(--ink-mid);letter-spacing:.04em}
+.footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-family:var(--font-body);font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
+.footer-col-link{display:block;font-size:9px;color:var(--ink-mid);text-decoration:none;letter-spacing:.04em;padding:4px 0;transition:color .2s}
+.footer-col-link:hover{color:var(--green)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.footer-copy{font-size:9px;color:var(--ink-light);letter-spacing:.1em}
+.footer-socials{display:flex;gap:8px}
+.footer-social-btn{
+  width:36px;height:36px;border:1px solid var(--line);border-radius:50%;
+  background:none;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-body);font-size:7px;letter-spacing:.08em;
+  color:var(--ink-mid);text-decoration:none;transition:all .2s;
+}
+.footer-social-btn:hover{border-color:var(--green);color:var(--green)}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+@media(max-width:768px){
+  header{padding:18px 20px}
+  .about-hero{grid-template-columns:1fr;padding:56px 20px;gap:28px}
+  .about-hero-title{font-size:clamp(2.8rem,10vw,4.5rem)}
+  .about-two-col{grid-template-columns:1fr}
+  .about-col{padding:52px 20px}
+  .about-value{grid-template-columns:1fr;padding:64px 20px}
+  .about-why{padding:56px 20px}
+  .about-process{padding:56px 20px}
+  .process-grid{grid-template-columns:1fr}
+  .about-cta{padding:72px 20px}
+  .site-footer{padding:48px 20px 0}
+  .footer-top{grid-template-columns:1fr;gap:36px}
+  .footer-cols{grid-template-columns:repeat(2,1fr);gap:20px}
+}
+@media(max-width:600px){
+  .footer-cols{grid-template-columns:1fr;gap:12px}
+  .header-nav{gap:16px}
+}
+@media(hover:none){
+  .nav-btn,.cta-btn{cursor:auto}
 }
 </style>
 </head>
@@ -219,23 +228,20 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
 <div class="cur-ring" id="curRing"></div>
 
 <header>
-  <a href="index.html" class="logo" id="site-logo"><div class="logo-diamond"></div><span id="logo-text">Trevio</span></a>
-  <div class="header-tag" id="header-tag-el"></div>
+  <a href="index.html" class="logo" id="site-logo"></a>
   <nav class="header-nav">
-    <a href="about.html" class="nav-btn active" id="nav-about">About Us</a>
-    <a href="index.html" class="nav-btn" id="nav-portfolio">Portfolio</a>
+    <a href="about.html" class="nav-btn active">About Us</a>
+    <a href="index.html" class="nav-btn">Portfolio</a>
   </nav>
 </header>
 
-<!-- HERO -->
+<!-- HERO — uses ABOUT_HERO_TITLE / ABOUT_HERO_DESC, separate from section content -->
 <section class="about-hero">
   <div>
-    <p class="about-hero-label" id="about-hero-label">About Us</p>
+    <p class="about-hero-label">About Us</p>
     <h1 class="about-hero-title" id="about-hero-title"></h1>
   </div>
-  <div class="about-hero-right">
-    <p class="about-hero-desc" id="about-hero-desc"></p>
-  </div>
+  <p class="about-hero-desc" id="about-hero-desc"></p>
 </section>
 
 <!-- WHO WE ARE + WHAT WE DO -->
@@ -243,12 +249,12 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
   <div class="about-col">
     <p class="section-label" id="who-label"></p>
     <h2 class="section-title" id="who-title"></h2>
-    <p class="section-body" id="who-text"></p>
+    <p class="section-body"  id="who-text"></p>
   </div>
   <div class="about-col">
     <p class="section-label" id="what-label"></p>
     <h2 class="section-title" id="what-title"></h2>
-    <p class="section-body" id="what-text"></p>
+    <p class="section-body"  id="what-text"></p>
   </div>
 </div>
 
@@ -258,9 +264,7 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
     <p class="section-label" id="value-label"></p>
     <div class="value-headline" id="value-headline"></div>
   </div>
-  <div>
-    <p class="value-body" id="value-body"></p>
-  </div>
+  <p class="value-body" id="value-body"></p>
 </section>
 
 <!-- WHY WORK WITH US -->
@@ -281,124 +285,161 @@ footer{border-top:1px solid var(--line);padding:28px 48px;display:flex;justify-c
 <section class="about-cta">
   <p class="cta-eyebrow">Ready to see the results?</p>
   <h2 class="cta-headline">One photo.<br><em>Infinite visuals.</em></h2>
-  <a href="#" class="cta-btn" id="cta-link"><span id="cta-text">View Our Portfolio</span><span class="cta-arrow">→</span></a>
+  <a href="#" class="cta-btn" id="cta-link">
+    <span id="cta-text">View Our Portfolio</span>
+    <span class="cta-arrow">→</span>
+  </a>
 </section>
 
-<footer>
-  <div class="footer-logo" id="footer-logo-el"><div class="logo-diamond"></div><span id="footer-logo-text">Trevio</span></div>
-  <a href="#" class="footer-email" id="footer-email-el"></a>
-  <div class="footer-copy" id="footer-copy-el"></div>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-wrap" id="footer-logo-el"></div>
+      <p class="footer-brand-desc" id="footer-brand-desc"></p>
+    </div>
+    <div class="footer-cols" id="footer-cols"></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy" id="footer-copy-el"></div>
+    <div class="footer-socials" id="footer-socials"></div>
+  </div>
 </footer>
 
 <script src="config.js"></script>
 <script>
-// ── PAGE TITLE ──
-document.title = ABOUT_PAGE_TITLE;
-
-// ── LOGO ──
+// ── TYPOGRAPHY FROM CONFIG ──────────────────────────────────────
 (function(){
-  const logoEl = document.getElementById('site-logo');
-  const footerLogoEl = document.getElementById('footer-logo-el');
-  if (LOGO) {
-    document.getElementById('logo-text').style.display = 'none';
-    document.querySelector('#site-logo .logo-diamond').style.display = 'none';
-    const img = document.createElement('img');
-    img.src = LOGO; img.alt = BRAND_NAME; img.className = 'logo-img';
-    logoEl.prepend(img);
-    footerLogoEl.innerHTML = `<img src="${LOGO}" alt="${BRAND_NAME}" class="logo-img" style="height:22px">`;
-  } else {
-    document.getElementById('logo-text').textContent = BRAND_NAME;
-    document.getElementById('footer-logo-text').textContent = BRAND_NAME;
-  }
+  var r = document.documentElement.style;
+  var map = {
+    '--font-heading':          typeof FONT_HEADING            !== 'undefined' ? FONT_HEADING            : null,
+    '--font-body':             typeof FONT_BODY               !== 'undefined' ? FONT_BODY               : null,
+    '--font-size-body':        typeof FONT_SIZE_BODY          !== 'undefined' ? FONT_SIZE_BODY          : null,
+    '--font-size-hero':        typeof FONT_SIZE_HERO          !== 'undefined' ? FONT_SIZE_HERO          : null,
+    '--font-size-section':     typeof FONT_SIZE_SECTION       !== 'undefined' ? FONT_SIZE_SECTION       : null,
+    '--font-weight-heading':   typeof FONT_WEIGHT_HEADING     !== 'undefined' ? FONT_WEIGHT_HEADING     : null,
+    '--letter-spacing-heading':typeof LETTER_SPACING_HEADING  !== 'undefined' ? LETTER_SPACING_HEADING  : null,
+  };
+  Object.keys(map).forEach(function(k){ if(map[k]) r.setProperty(k, map[k]); });
 })();
 
-// ── HEADER TAG & FOOTER ──
-document.getElementById('header-tag-el').textContent = HEADER_TAG;
-const footerEmailEl = document.getElementById('footer-email-el');
-footerEmailEl.textContent = FOOTER_EMAIL;
-footerEmailEl.href = 'mailto:' + FOOTER_EMAIL;
-document.getElementById('footer-copy-el').textContent = FOOTER_COPY;
+document.title = ABOUT_PAGE_TITLE;
 
-// ── HERO ──
-document.getElementById('about-hero-title').innerHTML =
-  ABOUT_WHO_TITLE.split(' ').slice(0,1).join(' ') + '<br><em>' + 'We Are' + '</em>';
-// Use a proper intro derived from config
-document.getElementById('about-hero-title').innerHTML =
-  'Who<br><em>We Are</em>';
-document.getElementById('about-hero-desc').textContent = ABOUT_WHO_TEXT;
+// ── LOGO ────────────────────────────────────────────────────────
+(function(){
+  var svgMark = '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    + '<path fill-rule="evenodd" clip-rule="evenodd" fill="white"'
+    + ' d="M3 3H17C22 3 24 7 24 12C24 20 17 23 10 23H3V3Z'
+    + ' M7 7H13C16.5 7 18.5 9.5 18.5 12.5C18.5 16.5 15.5 19 10.5 19H7V7Z'
+    + ' M10 11H12.5C13.9 11 15 12.1 15 13.5C15 14.9 13.9 16 12.5 16H10V11Z"/>'
+    + '</svg>';
 
-// ── WHO WE ARE ──
+  function buildLogo(small) {
+    if (LOGO) {
+      return '<img src="' + LOGO + '" alt="' + BRAND_NAME + '" class="logo-img"'
+        + (small ? ' style="height:22px"' : '') + '>';
+    }
+    return svgMark + '<span class="logo-mark-text" style="'
+      + (small ? 'font-size:.85rem' : '') + '">' + BRAND_NAME + '</span>';
+  }
+
+  document.getElementById('site-logo').innerHTML = buildLogo(false);
+  document.getElementById('footer-logo-el').innerHTML = buildLogo(true);
+})();
+
+// ── HERO ────────────────────────────────────────────────────────
+document.getElementById('about-hero-title').innerHTML =
+  typeof ABOUT_HERO_TITLE !== 'undefined' ? ABOUT_HERO_TITLE : 'About<br><em>Trevio</em>';
+document.getElementById('about-hero-desc').textContent =
+  typeof ABOUT_HERO_DESC !== 'undefined' ? ABOUT_HERO_DESC : '';
+
+// ── WHO WE ARE ──────────────────────────────────────────────────
 document.getElementById('who-label').textContent = ABOUT_WHO_TITLE;
 document.getElementById('who-title').textContent = ABOUT_WHO_TITLE;
-document.getElementById('who-text').textContent = ABOUT_WHO_TEXT;
+document.getElementById('who-text').textContent  = ABOUT_WHO_TEXT;
 
-// ── WHAT WE DO ──
+// ── WHAT WE DO ──────────────────────────────────────────────────
 document.getElementById('what-label').textContent = ABOUT_WHAT_TITLE;
 document.getElementById('what-title').textContent = ABOUT_WHAT_TITLE;
-document.getElementById('what-text').textContent = ABOUT_WHAT_TEXT;
+document.getElementById('what-text').textContent  = ABOUT_WHAT_TEXT;
 
-// ── OUR VALUE ──
+// ── OUR VALUE ───────────────────────────────────────────────────
 document.getElementById('value-label').textContent = ABOUT_VALUE_TITLE;
 document.getElementById('value-headline').innerHTML =
   ABOUT_VALUE_HEADLINE.replace(/(Infinite visuals\.)/i, '<em>$1</em>');
 document.getElementById('value-body').textContent = ABOUT_VALUE_TEXT;
 
-// ── WHY WORK WITH US ──
+// ── WHY WORK WITH US ────────────────────────────────────────────
 document.getElementById('why-label').textContent = ABOUT_WHY_TITLE;
 document.getElementById('why-title').textContent = ABOUT_WHY_TITLE;
-const whyList = document.getElementById('why-list');
-ABOUT_WHY_ITEMS.forEach(function(item) {
-  const li = document.createElement('li');
+var whyList = document.getElementById('why-list');
+ABOUT_WHY_ITEMS.forEach(function(item){
+  var li = document.createElement('li');
   li.className = 'why-item';
   li.innerHTML = '<div class="why-diamond"></div><span class="why-text">' + item + '</span>';
   whyList.appendChild(li);
 });
 
-// ── OUR PROCESS ──
+// ── OUR PROCESS ─────────────────────────────────────────────────
 document.getElementById('process-label').textContent = ABOUT_PROCESS_TITLE;
 document.getElementById('process-title').textContent = ABOUT_PROCESS_TITLE;
-const processGrid = document.getElementById('process-grid');
-ABOUT_PROCESS_STEPS.forEach(function(step, i) {
-  const el = document.createElement('div');
+var processGrid = document.getElementById('process-grid');
+ABOUT_PROCESS_STEPS.forEach(function(step, i){
+  var el = document.createElement('div');
   el.className = 'process-step';
   el.style.transitionDelay = (i * 0.1) + 's';
-  el.innerHTML =
-    '<div class="step-num">' + step.label + '</div>' +
-    '<h3 class="step-title">' + step.title + '</h3>' +
-    '<p class="step-desc">' + step.desc + '</p>';
+  el.innerHTML = '<div class="step-num">' + step.label + '</div>'
+    + '<h3 class="step-title">' + step.title + '</h3>'
+    + '<p class="step-desc">' + step.desc + '</p>';
   processGrid.appendChild(el);
 });
 
-// ── CTA ──
+// ── CTA ─────────────────────────────────────────────────────────
 document.getElementById('cta-text').textContent = ABOUT_CTA_TEXT;
 document.getElementById('cta-link').href = ABOUT_CTA_LINK;
 
-// ── SCROLL ANIMATIONS ──
-const observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry) {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.process-step').forEach(function(el) {
-  observer.observe(el);
-});
+// ── FOOTER ──────────────────────────────────────────────────────
+document.getElementById('footer-brand-desc').textContent =
+  typeof FOOTER_BRAND_DESC !== 'undefined' ? FOOTER_BRAND_DESC : '';
+document.getElementById('footer-copy-el').textContent = FOOTER_COPY;
 
-// ── CURSOR ──
-const dot = document.getElementById('curDot');
-const ring = document.getElementById('curRing');
-if (window.matchMedia('(hover: hover)').matches) {
-  let mx=0, my=0, rx=0, ry=0;
-  document.addEventListener('mousemove', function(e) {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+if (typeof FOOTER_COLUMNS !== 'undefined') {
+  var colsEl = document.getElementById('footer-cols');
+  FOOTER_COLUMNS.forEach(function(col){
+    var div = document.createElement('div');
+    div.className = 'footer-col';
+    div.innerHTML = '<div class="footer-col-title">' + col.title + '</div>'
+      + col.links.map(function(l){
+          return '<a href="' + l.href + '" class="footer-col-link">' + l.label + '</a>';
+        }).join('');
+    colsEl.appendChild(div);
   });
-  (function animRing() {
-    rx += (mx - rx) * .12; ry += (my - ry) * .12;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(animRing);
-  })();
+}
+if (typeof FOOTER_SOCIALS !== 'undefined') {
+  var socEl = document.getElementById('footer-socials');
+  FOOTER_SOCIALS.forEach(function(s){
+    var a = document.createElement('a');
+    a.href = s.href; a.className = 'footer-social-btn';
+    a.setAttribute('aria-label', s.label);
+    a.innerHTML = s.icon;
+    if (s.href !== '#') { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+    socEl.appendChild(a);
+  });
+}
+
+// ── SCROLL ANIMATIONS ───────────────────────────────────────────
+var obs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.process-step').forEach(function(el){ obs.observe(el); });
+
+// ── CURSOR ───────────────────────────────────────────────────────
+var dot  = document.getElementById('curDot');
+var ring = document.getElementById('curRing');
+if (window.matchMedia('(hover: hover)').matches) {
+  var mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+  (function animRing(){ rx+=(mx-rx)*.22; ry+=(my-ry)*.22; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
 }
 </script>
 </body>

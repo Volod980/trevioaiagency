@@ -12,9 +12,57 @@ const BRAND_NAME = "Trevio";
 const LOGO = "";
 
 // ── HEADER & FOOTER ──────────────────────────────────────────────
-const HEADER_TAG   = "Next-Level Product Visuals";
-const FOOTER_EMAIL = "trevioagency@gmail.com";
-const FOOTER_COPY  = "©2025 Trevio";
+const FOOTER_EMAIL      = "trevioagency@gmail.com";
+const FOOTER_COPY       = "©2025 Trevio";
+const FOOTER_BRAND_DESC = "Next-level product visuals powered by AI.";
+
+// Footer link columns — add/remove columns and links freely
+const FOOTER_COLUMNS = [
+  {
+    title: "Services",
+    links: [
+      { label: "AI Product Visuals", href: "#" },
+      { label: "Brand Photography",  href: "#" },
+      { label: "Content Creation",   href: "#" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About Us",  href: "about.html"                    },
+      { label: "Portfolio", href: "index.html"                    },
+      { label: "Contact",   href: "mailto:trevioagency@gmail.com" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "#" },
+      { label: "Terms of Use",   href: "#" },
+    ],
+  },
+];
+
+// Social icons in footer — set href to your real URL, icon to any short text/emoji
+const FOOTER_SOCIALS = [
+  { label: "Instagram", href: "#", icon: "IG" },
+  { label: "Telegram",  href: "#", icon: "TG" },
+];
+
+// ── TYPOGRAPHY ───────────────────────────────────────────────────
+// Font families (use any Google Fonts name already loaded, or a system stack)
+const FONT_HEADING = "'Cormorant Garamond', serif";
+const FONT_BODY    = "'DM Mono', monospace";
+
+// Font sizes (any valid CSS value: px, rem, clamp(), etc.)
+const FONT_SIZE_BODY    = "10px";
+const FONT_SIZE_HERO    = "clamp(3rem,6vw,5.5rem)";
+const FONT_SIZE_SECTION = "clamp(2rem,4vw,3.2rem)";
+
+// Font weight for large headings (100–900)
+const FONT_WEIGHT_HEADING   = "300";
+// Letter-spacing for large headings
+const LETTER_SPACING_HEADING = "-.02em";
 
 // ── INDEX PAGE — HERO SECTION ────────────────────────────────────
 const SITE_TITLE = "Trevio — Our Work";
@@ -24,6 +72,10 @@ const SITE_DESC  = "We transform a single product image into high-quality AI-gen
 
 // ── ABOUT PAGE ───────────────────────────────────────────────────
 const ABOUT_PAGE_TITLE = "Trevio — About Us";
+
+// About page hero (shown at the very top — different from the section content below)
+const ABOUT_HERO_TITLE = "About<br><em>Trevio</em>";
+const ABOUT_HERO_DESC  = "A creative AI studio built for modern brands — combining generative intelligence with sharp editorial vision.";
 
 // Who We Are section
 const ABOUT_WHO_TITLE = "Who We Are";
