@@ -1,26 +1,95 @@
 // ═══════════════════════════════════════════════════════════════
-//  TREVIO CONFIG — редагуй тільки цей файл
-//  Після змін — заміни config.js на сервері (Netlify)
+//  TREVIO CONFIG — edit only this file
+//  After changes — replace config.js on Netlify
 // ═══════════════════════════════════════════════════════════════
 
+// ── BRAND ────────────────────────────────────────────────────────
+const BRAND_NAME = "Trevio";
+
+// Set a path to your logo image to display it in the header instead of the brand name text.
+// Leave as empty string "" to use the text logo.
+// Example: const LOGO = "photos/logo.svg";
+const LOGO = "";
+
+// ── HEADER & FOOTER ──────────────────────────────────────────────
+const HEADER_TAG   = "Next-Level Product Visuals";
+const FOOTER_EMAIL = "trevioagency@gmail.com";
+const FOOTER_COPY  = "©2025 Trevio";
+
+// ── INDEX PAGE — HERO SECTION ────────────────────────────────────
 const SITE_TITLE = "Trevio — Our Work";
 const SITE_LINE1 = "One photo.";
 const SITE_LINE2 = "Infinite visuals.";
 const SITE_DESC  = "We transform a single product image into high-quality AI-generated visuals — any model, location, lighting, or style.";
 
-// ── КЕЙСИ ───────────────────────────────────────────────────────
+// ── ABOUT PAGE ───────────────────────────────────────────────────
+const ABOUT_PAGE_TITLE = "Trevio — About Us";
+
+// Who We Are section
+const ABOUT_WHO_TITLE = "Who We Are";
+const ABOUT_WHO_TEXT  = "Trevio is a creative AI studio built for modern brands. We combine cutting-edge generative AI with a sharp editorial eye to produce product visuals that stop the scroll — without a studio, a model, or a lengthy production cycle.";
+
+// What We Do section
+const ABOUT_WHAT_TITLE = "What We Do";
+const ABOUT_WHAT_TEXT  = "We take a single product photo and transform it into a full suite of high-quality AI-generated visuals. Any background, any model, any location, any mood. Whatever your brand needs — we produce it at scale.";
+
+// Our Value section
+const ABOUT_VALUE_TITLE = "Our Value";
+const ABOUT_VALUE_HEADLINE = "One photo. Infinite visuals.";
+const ABOUT_VALUE_TEXT = "Traditional product photography is expensive, slow, and hard to scale. We eliminate those constraints entirely. Our clients get more creative output, faster, at a fraction of the cost.";
+
+// Why Work With Us section
+const ABOUT_WHY_TITLE = "Why Work With Us";
+const ABOUT_WHY_ITEMS = [
+  "Lightning-fast turnaround — results in hours, not weeks",
+  "Consistent quality at any scale",
+  "No studio, no model, no hassle — just your product",
+  "Fully custom styles, moods, locations, and lighting",
+  "Dedicated team with a sharp eye for brand aesthetics",
+];
+
+// Our Process section
+const ABOUT_PROCESS_TITLE = "Our Process";
+const ABOUT_PROCESS_STEPS = [
+  {
+    label: "01",
+    title: "You send us one photo",
+    desc:  "Any background, any lighting. Just a clear shot of your product.",
+  },
+  {
+    label: "02",
+    title: "We choose the right approach",
+    desc:  "Our team identifies the best AI models, prompts, and creative direction for your brand.",
+  },
+  {
+    label: "03",
+    title: "AI generates the visuals",
+    desc:  "We produce multiple high-quality images — different styles, scenes, and moods.",
+  },
+  {
+    label: "04",
+    title: "You receive the full set",
+    desc:  "Final images delivered ready-to-use for social media, ads, e-commerce, and beyond.",
+  },
+];
+
+// About page CTA button
+const ABOUT_CTA_TEXT = "View Our Portfolio";
+const ABOUT_CTA_LINK = "index.html";
+
+// ── CASES ────────────────────────────────────────────────────────
 //
-//  ПОЛЯ:
-//  title        — назва кейсу
-//  tag          — категорія (стає вкладкою автоматично)
-//  before       — фото товару (ліворуч)
-//  after        — головний AI результат (праворуч)
-//  results      — (необов'язково) додаткові AI фото. Показує "+N more" на картці.
-//                 В lightbox можна гортати крапками або стрілками ‹ ›
-//  focusBefore  — обрізка лівого фото:  "top" | "center" | "bottom"
-//  focusAfter   — обрізка правого фото: "top" | "center" | "bottom"
+//  FIELDS:
+//  title        — case title
+//  tag          — category (automatically becomes a tab)
+//  before       — product photo (left side)
+//  after        — main AI result (right side)
+//  results      — (optional) additional AI photos. Shows "+N more" on the card.
+//                 In lightbox, navigate with dots or ‹ › arrows.
+//  focusBefore  — crop of left photo:  "top" | "center" | "bottom"
+//  focusAfter   — crop of right photo: "top" | "center" | "bottom"
 //
-//  ПРИКЛАД З ОДНИМ РЕЗУЛЬТАТОМ:
+//  EXAMPLE — single result:
 //  {
 //    title:  "Jacket",
 //    tag:    "Clothing",
@@ -28,7 +97,7 @@ const SITE_DESC  = "We transform a single product image into high-quality AI-gen
 //    after:  "photos/after.jpg",
 //  }
 //
-//  ПРИКЛАД З КІЛЬКОМА РЕЗУЛЬТАТАМИ:
+//  EXAMPLE — multiple results:
 //  {
 //    title:   "Jacket",
 //    tag:     "Clothing",
@@ -49,7 +118,6 @@ const CASES = [
 	results: ["1_після.jpeg","1_після.jpeg"],
     focusBefore: "center",
     focusAfter:  "top",
-      // розкоментуй щоб додати варіанти
   },
   {
     title:       "Dress — Summer Editorial",
@@ -66,7 +134,6 @@ const CASES = [
     after:       "1_після.jpeg",
     focusBefore: "center",
     focusAfter:  "top",
-      // розкоментуй щоб додати варіанти
   },
 
   // ── FOOTWEAR ──────────────────────────────────────────────────
@@ -157,10 +224,10 @@ const CASES = [
     focusAfter:  "top",
   },
 
-  // Додай свій кейс нижче:
+  // Add your case below:
   // {
-  //   title:       "Назва",
-  //   tag:         "Категорія",
+  //   title:       "Title",
+  //   tag:         "Category",
   //   before:      "photos/before.jpg",
   //   after:       "photos/after-1.jpg",
   //   results:     ["photos/after-2.jpg", "photos/after-3.jpg"],
