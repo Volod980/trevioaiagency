@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trevio — Our Work</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -308,6 +309,21 @@ header{
 .footer-copy{font-size:11px;color:var(--ink-mid);letter-spacing:.08em}
 .footer-brand-desc{font-size:12px;line-height:1.9;color:var(--ink-mid);letter-spacing:.04em}
 
+/* ── SEE MORE ───────────────────────────────────────────────── */
+.see-more-wrap{
+  grid-column:1 / -1;display:flex;justify-content:center;
+  padding:40px 0 20px;
+}
+.see-more-btn{
+  font-family:var(--font-body);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  padding:14px 40px;border:1px solid rgba(255,255,255,.15);
+  background:none;color:var(--ink-mid);cursor:none;
+  transition:border-color .25s,color .25s;border-radius:2px;
+}
+.see-more-btn:hover{border-color:var(--green);color:var(--green)}
+.see-more-count{color:var(--ink-light)}
+@media(hover:none){.see-more-btn{cursor:auto}}
+
 /* ── SCROLL TO TOP ──────────────────────────────────────────── */
 .scroll-top-btn{
   position:fixed;bottom:36px;right:36px;
@@ -546,10 +562,11 @@ var tabsEl    = document.getElementById('tabs');
 var casesEl   = document.getElementById('cases');
 var allTags   = ['All'].concat([].filter.call(CASES.map(function(c){return c.tag}), function(v,i,a){return a.indexOf(v)===i;}));
 var activeTab = 'All', currentFiltered = CASES.slice(), lbCur = 0, lbAfterIdx = 0;
+var VISIBLE_COUNT = 10;
 
-// grid switcher
-var currentCols = 1;
-casesEl.classList.add('cols-1');
+// grid switcher — manual override
+var currentCols = 3;
+casesEl.classList.add('cols-3');
 [1,2,3].forEach(function(n){
   document.getElementById('grid-'+n).addEventListener('click', function(){
     currentCols = n;
@@ -557,6 +574,8 @@ casesEl.classList.add('cols-1');
     casesEl.className = 'cases cols-'+n;
   });
 });
+// set grid-3 as initially active
+[1,2,3].forEach(function(x){ document.getElementById('grid-'+x).classList.toggle('active', x===3); });
 
 allTags.forEach(function(tag){
   var btn = document.createElement('button');
@@ -566,10 +585,17 @@ allTags.forEach(function(tag){
   tabsEl.appendChild(btn);
 });
 
+function setColsForTab(tag) {
+  var cols = (tag === 'All') ? 3 : 1;
+  currentCols = cols;
+  [1,2,3].forEach(function(x){ document.getElementById('grid-'+x).classList.toggle('active', x===cols); });
+}
+
 function switchTab(tag, updateHash) {
   if (updateHash === undefined) updateHash = true;
   activeTab = tag;
   document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.textContent===tag); });
+  setColsForTab(tag);
   currentFiltered = tag==='All' ? CASES.slice() : CASES.filter(function(c){ return c.tag===tag; });
   renderCases(currentFiltered);
   if (updateHash) {
@@ -580,51 +606,74 @@ function switchTab(tag, updateHash) {
 
 function getAfterArr(c){ return (Array.isArray(c.after) ? c.after : [c.after]).concat(c.results||[]); }
 
+function buildCaseWrap(c, globalIdx, animDelay) {
+  var wrap = document.createElement('div');
+  wrap.className = 'pair-wrap';
+  wrap.style.transitionDelay = animDelay+'s';
+  var afterArr = getAfterArr(c);
+  var hasMore  = afterArr.length > 1;
+  var cardAfterIdx = 0;
+  wrap.innerHTML =
+    '<div class="pair" data-idx="'+globalIdx+'">'
+    + '<div class="side before">'
+    +   '<img src="'+c.before+'" loading="lazy" alt="'+c.title+'" data-focus="'+(c.focusBefore||'center')+'">'
+    + '</div>'
+    + '<div class="pair-arrow">→</div>'
+    + '<div class="side after">'
+    +   '<img src="'+afterArr[0]+'" loading="lazy" alt="'+c.title+'" data-focus="'+(c.focusAfter||'top')+'" class="after-img">'
+    +   (hasMore ? '<button class="card-after-arr left" data-dir="-1">‹</button>' : '')
+    +   (hasMore ? '<button class="card-after-arr right" data-dir="1">›</button>' : '')
+    +   (hasMore ? '<div class="more-badge">+' + (afterArr.length-1) + ' more</div>' : '')
+    + '</div>'
+    + '</div>'
+    + '<div class="pair-labels">'
+    +   '<div class="pair-label-cell">Product</div>'
+    +   '<div class="pair-label-cell ai-label">AI</div>'
+    + '</div>';
+  wrap.querySelector('.pair').addEventListener('click', function(){ openLb(globalIdx, cardAfterIdx); });
+  if (hasMore) {
+    wrap.querySelectorAll('.card-after-arr').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        cardAfterIdx = (cardAfterIdx + parseInt(btn.dataset.dir) + afterArr.length) % afterArr.length;
+        var img = wrap.querySelector('.after-img');
+        img.style.opacity='0'; img.style.transition='opacity .2s';
+        setTimeout(function(){
+          img.src = afterArr[cardAfterIdx]; img.style.opacity='1';
+          var b = wrap.querySelector('.more-badge'); if(b) b.textContent='+' + (afterArr.length-1) + ' more';
+        }, 150);
+      });
+    });
+  }
+  return wrap;
+}
+
 function renderCases(list) {
   casesEl.style.opacity='0'; casesEl.style.transform='translateY(8px)'; casesEl.style.transition='opacity .25s ease,transform .25s ease';
   casesEl.className = 'cases cols-'+currentCols;
   setTimeout(function(){
     casesEl.innerHTML = '';
-    list.forEach(function(c, i){
-      var wrap = document.createElement('div');
-      wrap.className = 'pair-wrap'; wrap.style.transitionDelay = (i*.06)+'s';
-      var afterArr = getAfterArr(c);
-      var hasMore  = afterArr.length > 1;
-      var cardAfterIdx = 0;
-      wrap.innerHTML =
-        '<div class="pair" data-idx="'+i+'">'
-        + '<div class="side before">'
-        +   '<img src="'+c.before+'" loading="lazy" alt="'+c.title+'" data-focus="'+(c.focusBefore||'center')+'">'
-        + '</div>'
-        + '<div class="pair-arrow">→</div>'
-        + '<div class="side after">'
-        +   '<img src="'+afterArr[0]+'" loading="lazy" alt="'+c.title+'" data-focus="'+(c.focusAfter||'top')+'" class="after-img">'
-        +   (hasMore ? '<button class="card-after-arr left" data-dir="-1">‹</button>' : '')
-        +   (hasMore ? '<button class="card-after-arr right" data-dir="1">›</button>' : '')
-        +   (hasMore ? '<div class="more-badge">+' + (afterArr.length-1) + ' more</div>' : '')
-        + '</div>'
-        + '</div>'
-        + '<div class="pair-labels">'
-        +   '<div class="pair-label-cell">Product</div>'
-        +   '<div class="pair-label-cell ai-label">AI</div>'
-        + '</div>';
-      wrap.querySelector('.pair').addEventListener('click', function(){ openLb(i, cardAfterIdx); });
-      if (hasMore) {
-        wrap.querySelectorAll('.card-after-arr').forEach(function(btn){
-          btn.addEventListener('click', function(e){
-            e.stopPropagation();
-            cardAfterIdx = (cardAfterIdx + parseInt(btn.dataset.dir) + afterArr.length) % afterArr.length;
-            var img = wrap.querySelector('.after-img');
-            img.style.opacity='0'; img.style.transition='opacity .2s';
-            setTimeout(function(){
-              img.src = afterArr[cardAfterIdx]; img.style.opacity='1';
-              var b = wrap.querySelector('.more-badge'); if(b) b.textContent='+' + (afterArr.length-1) + ' more';
-            }, 150);
-          });
+    var shown = Math.min(list.length, VISIBLE_COUNT);
+    for (var i = 0; i < shown; i++) {
+      casesEl.appendChild(buildCaseWrap(list[i], i, i*0.06));
+    }
+    if (list.length > shown) {
+      var moreWrap = document.createElement('div');
+      moreWrap.className = 'see-more-wrap';
+      var remaining = list.length - shown;
+      moreWrap.innerHTML = '<button class="see-more-btn">See more <span class="see-more-count">(' + remaining + ')</span></button>';
+      moreWrap.querySelector('.see-more-btn').addEventListener('click', function(){
+        moreWrap.remove();
+        for (var j = shown; j < list.length; j++) {
+          var w = buildCaseWrap(list[j], j, 0);
+          casesEl.appendChild(w);
+        }
+        casesEl.querySelectorAll('.pair-wrap:not(.visible)').forEach(function(el, idx){
+          setTimeout(function(){ el.classList.add('visible'); }, idx*60);
         });
-      }
-      casesEl.appendChild(wrap);
-    });
+      });
+      casesEl.appendChild(moreWrap);
+    }
     casesEl.style.opacity='1'; casesEl.style.transform='translateY(0)';
     requestAnimationFrame(function(){
       document.querySelectorAll('.pair-wrap').forEach(function(el,i){
@@ -688,6 +737,7 @@ var initialTab = getTabFromHash();
 document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.textContent===initialTab); });
 currentFiltered = initialTab==='All' ? CASES.slice() : CASES.filter(function(c){ return c.tag===initialTab; });
 activeTab = initialTab;
+setColsForTab(initialTab);
 renderCases(currentFiltered);
 window.addEventListener('hashchange', function(){ switchTab(getTabFromHash(), false); });
 
