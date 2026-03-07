@@ -13,13 +13,13 @@
   --bg2:#0c0c0c;
   --bg3:#141414;
   --ink:#f0ede8;
-  --ink-mid:#555;
+  --ink-mid:#8a8a8a;
   --ink-light:#2a2a2a;
   --green:#3ecf3e;
   --line:rgba(255,255,255,0.07);
   --font-heading:'Cormorant Garamond',serif;
   --font-body:'DM Mono',monospace;
-  --font-size-body:10px;
+  --font-size-body:13px;
   --font-size-hero:clamp(3rem,6vw,5.5rem);
   --font-size-section:clamp(2rem,4vw,3.2rem);
   --font-weight-heading:300;
@@ -56,7 +56,7 @@ header{
 }
 .header-nav{display:flex;gap:24px;align-items:center}
 .nav-btn{
-  font-family:var(--font-body);font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  font-family:var(--font-body);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
   background:none;border:none;color:var(--ink-mid);cursor:none;text-decoration:none;
   padding:3px 0;position:relative;transition:color .2s;
 }
@@ -124,10 +124,28 @@ header{
 /* ── WHY WORK WITH US ───────────────────────────────────────── */
 .about-why{padding:72px 48px;border-bottom:1px solid var(--line)}
 .why-list{list-style:none;display:flex;flex-direction:column;gap:0;margin-top:40px}
-.why-item{display:flex;align-items:flex-start;gap:20px;padding:18px 0;border-top:1px solid var(--line)}
+.why-item{
+  display:grid;grid-template-columns:64px 1fr 24px;
+  align-items:center;gap:24px;
+  padding:24px 0;border-top:1px solid var(--line);
+  transition:background .2s;
+}
 .why-item:last-child{border-bottom:1px solid var(--line)}
-.why-diamond{width:6px;height:6px;background:var(--green);transform:rotate(45deg);flex-shrink:0;margin-top:4px}
-.why-text{font-size:var(--font-size-body);line-height:1.9;color:var(--ink-mid)}
+.why-num{
+  font-family:var(--font-heading);font-size:2rem;font-weight:300;
+  color:var(--ink-light);line-height:1;letter-spacing:-.02em;
+  transition:color .25s;
+}
+.why-text{
+  font-size:14px;line-height:1.75;
+  color:var(--ink);letter-spacing:.01em;
+}
+.why-arrow{
+  font-size:14px;color:var(--ink-light);
+  transition:color .25s,transform .25s;
+}
+.why-item:hover .why-num{color:var(--green)}
+.why-item:hover .why-arrow{color:var(--green);transform:translateX(4px)}
 
 /* ── OUR PROCESS ────────────────────────────────────────────── */
 .about-process{padding:72px 48px;border-bottom:1px solid var(--line)}
@@ -183,19 +201,31 @@ header{
 .footer-logo-wrap{display:flex;align-items:center;gap:9px}
 .footer-brand-desc{font-size:9px;line-height:1.9;color:var(--ink-mid);letter-spacing:.04em}
 .footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
-.footer-col-title{font-family:var(--font-body);font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
-.footer-col-link{display:block;font-size:9px;color:var(--ink-mid);text-decoration:none;letter-spacing:.04em;padding:4px 0;transition:color .2s}
+.footer-col-title{font-family:var(--font-body);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
+.footer-col-link{display:block;font-size:12px;color:var(--ink-mid);text-decoration:none;letter-spacing:.06em;padding:5px 0;transition:color .2s}
 .footer-col-link:hover{color:var(--green)}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
-.footer-copy{font-size:9px;color:var(--ink-light);letter-spacing:.1em}
-.footer-socials{display:flex;gap:8px}
-.footer-social-btn{
-  width:36px;height:36px;border:1px solid var(--line);border-radius:50%;
-  background:none;display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-body);font-size:7px;letter-spacing:.08em;
-  color:var(--ink-mid);text-decoration:none;transition:all .2s;
+.footer-copy{font-size:11px;color:var(--ink-mid);letter-spacing:.08em}
+.footer-brand-desc{font-size:12px;line-height:1.9;color:var(--ink-mid);letter-spacing:.04em}
+
+/* ── SCROLL TO TOP ──────────────────────────────────────────── */
+.scroll-top-btn{
+  position:fixed;bottom:36px;right:36px;
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.15);
+  color:var(--ink);cursor:none;
+  display:flex;align-items:center;justify-content:center;
+  z-index:9000;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s,border-color .2s,color .2s,background .2s,transform .2s;
+  backdrop-filter:blur(8px);
 }
-.footer-social-btn:hover{border-color:var(--green);color:var(--green)}
+.scroll-top-btn.visible{opacity:1;pointer-events:all}
+.scroll-top-btn:hover{
+  border-color:var(--green);color:var(--green);
+  background:rgba(0,0,0,.9);transform:translateY(-3px);
+}
+@media(hover:none){.scroll-top-btn{cursor:auto}}
 
 /* ── RESPONSIVE ─────────────────────────────────────────────── */
 @media(max-width:768px){
@@ -238,7 +268,6 @@ header{
 <!-- HERO — uses ABOUT_HERO_TITLE / ABOUT_HERO_DESC, separate from section content -->
 <section class="about-hero">
   <div>
-    <p class="about-hero-label">About Us</p>
     <h1 class="about-hero-title" id="about-hero-title"></h1>
   </div>
   <p class="about-hero-desc" id="about-hero-desc"></p>
@@ -302,9 +331,14 @@ header{
   </div>
   <div class="footer-bottom">
     <div class="footer-copy" id="footer-copy-el"></div>
-    <div class="footer-socials" id="footer-socials"></div>
   </div>
 </footer>
+
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M9 13V5M5 9l4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
 
 <script src="config.js"></script>
 <script>
@@ -373,10 +407,13 @@ document.getElementById('value-body').textContent = ABOUT_VALUE_TEXT;
 document.getElementById('why-label').textContent = ABOUT_WHY_TITLE;
 document.getElementById('why-title').textContent = ABOUT_WHY_TITLE;
 var whyList = document.getElementById('why-list');
-ABOUT_WHY_ITEMS.forEach(function(item){
+ABOUT_WHY_ITEMS.forEach(function(item, i){
   var li = document.createElement('li');
   li.className = 'why-item';
-  li.innerHTML = '<div class="why-diamond"></div><span class="why-text">' + item + '</span>';
+  var num = (i + 1 < 10 ? '0' : '') + (i + 1);
+  li.innerHTML = '<span class="why-num">' + num + '</span>'
+    + '<span class="why-text">' + item + '</span>'
+    + '<span class="why-arrow">→</span>';
   whyList.appendChild(li);
 });
 
@@ -415,17 +452,13 @@ if (typeof FOOTER_COLUMNS !== 'undefined') {
     colsEl.appendChild(div);
   });
 }
-if (typeof FOOTER_SOCIALS !== 'undefined') {
-  var socEl = document.getElementById('footer-socials');
-  FOOTER_SOCIALS.forEach(function(s){
-    var a = document.createElement('a');
-    a.href = s.href; a.className = 'footer-social-btn';
-    a.setAttribute('aria-label', s.label);
-    a.innerHTML = s.icon;
-    if (s.href !== '#') { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
-    socEl.appendChild(a);
-  });
-}
+// ── SCROLL TO TOP ────────────────────────────────────────────────
+var scrollBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', function(){
+  if(window.scrollY > 400) scrollBtn.classList.add('visible');
+  else scrollBtn.classList.remove('visible');
+}, {passive:true});
+scrollBtn.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
 
 // ── SCROLL ANIMATIONS ───────────────────────────────────────────
 var obs = new IntersectionObserver(function(entries){
