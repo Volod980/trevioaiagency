@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trevio — Pricing</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#000;
+  --bg2:#0c0c0c;
+  --bg3:#141414;
+  --ink:#f0ede8;
+  --ink-mid:#8a8a8a;
+  --ink-light:#2a2a2a;
+  --green:#3ecf3e;
+  --line:rgba(255,255,255,0.07);
+  --font-heading:'Cormorant Garamond',serif;
+  --font-body:'DM Mono',monospace;
+  --font-size-body:13px;
+  --font-size-hero:clamp(3rem,6vw,5.5rem);
+  --font-size-section:clamp(2rem,4vw,3.2rem);
+  --font-weight-heading:300;
+  --letter-spacing-heading:-.02em;
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-weight:300;overflow-x:hidden;cursor:none}
+
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:100;
+}
+
+/* ── CURSOR ─────────────────────────────────────────────────── */
+.cur-dot{width:5px;height:5px;background:var(--green);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99999}
+.cur-ring{width:28px;height:28px;border:1px solid rgba(62,207,62,.35);border-radius:50%;position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99998;transition:width .25s,height .25s,border-color .25s}
+@media(hover:none){.cur-dot,.cur-ring{display:none!important}body{cursor:auto!important}}
+
+/* ── HEADER ─────────────────────────────────────────────────── */
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:22px 48px;border-bottom:1px solid var(--line);
+  position:sticky;top:0;
+  background:rgba(0,0,0,.92);backdrop-filter:blur(12px);
+  z-index:500;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.logo-img{height:30px;display:block;width:auto}
+.logo-mark-text{
+  font-family:var(--font-body);font-size:.95rem;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--ink);
+}
+.header-nav{display:flex;gap:24px;align-items:center}
+.nav-btn{
+  font-family:var(--font-body);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  background:none;border:none;color:var(--ink-mid);cursor:none;text-decoration:none;
+  padding:3px 0;position:relative;transition:color .2s;
+}
+.nav-btn::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;
+  background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .25s;
+}
+.nav-btn:hover{color:var(--ink)}
+.nav-btn.active{color:var(--ink)}
+.nav-btn.active::after,.nav-btn:hover::after{transform:scaleX(1)}
+@media(hover:none){.nav-btn{cursor:auto}}
+
+/* ── PRICING HERO ───────────────────────────────────────────── */
+.pricing-hero{
+  padding:96px 48px 80px;border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;
+}
+.pricing-hero-left{}
+.pricing-hero-label{
+  font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--green);margin-bottom:24px;
+}
+.pricing-hero-title{
+  font-family:var(--font-heading);
+  font-size:var(--font-size-hero);
+  font-weight:var(--font-weight-heading);
+  line-height:.88;letter-spacing:var(--letter-spacing-heading);color:var(--ink);
+}
+.pricing-hero-title em{font-style:italic;color:var(--green)}
+.pricing-hero-desc{font-size:var(--font-size-body);line-height:2.1;color:var(--ink-mid);max-width:440px;padding-bottom:8px}
+
+/* currency badge */
+.currency-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-body);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-mid);border:1px solid var(--line);padding:8px 14px;border-radius:2px;
+  margin-top:20px;
+}
+.currency-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── PRICING MAIN — two columns ─────────────────────────────── */
+.pricing-main{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--line);
+  border-bottom:1px solid var(--line);
+  align-items:start;
+}
+.pricing-block{background:var(--bg);padding:64px 48px}
+.pricing-block + .pricing-block{border-left:none}
+
+.block-label{
+  font-size:8px;letter-spacing:.35em;text-transform:uppercase;color:var(--green);
+  margin-bottom:28px;display:flex;align-items:center;gap:12px;
+}
+.block-label::after{content:'';flex:1;height:1px;background:var(--line)}
+.block-title{
+  font-family:var(--font-heading);
+  font-size:clamp(1.6rem,2.5vw,2.2rem);
+  font-weight:var(--font-weight-heading);
+  line-height:1.05;letter-spacing:var(--letter-spacing-heading);
+  color:var(--ink);margin-bottom:36px;
+}
+
+/* ── PACKAGE CARDS ──────────────────────────────────────────── */
+.pkg-list{display:flex;flex-direction:column;gap:12px}
+.pkg-card{
+  border:1px solid var(--line);padding:24px 28px;
+  background:var(--bg2);position:relative;
+  transition:border-color .25s,background .25s;
+}
+.pkg-card:hover{border-color:rgba(62,207,62,.25);background:var(--bg3)}
+.pkg-card.popular{border-color:rgba(62,207,62,.4)}
+.pkg-popular-badge{
+  position:absolute;top:16px;right:16px;
+  font-family:var(--font-body);font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+  background:var(--green);color:#000;padding:3px 10px;border-radius:1px;
+}
+.pkg-top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:16px}
+.pkg-name{
+  font-family:var(--font-body);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mid);
+}
+.pkg-price-wrap{text-align:right}
+.pkg-price{
+  font-family:var(--font-heading);font-size:2rem;font-weight:300;
+  letter-spacing:-.02em;color:var(--ink);line-height:1;
+}
+.pkg-price em{font-style:normal;font-size:1rem;color:var(--ink-mid);margin-right:2px}
+.pkg-price-note{font-size:9px;color:var(--ink-mid);letter-spacing:.08em;margin-top:3px}
+.pkg-price-strike{text-decoration:line-through;opacity:.5;margin-right:4px}
+.pkg-discount-tag{
+  display:inline-block;font-size:8px;letter-spacing:.1em;text-transform:uppercase;
+  background:rgba(62,207,62,.12);color:var(--green);padding:2px 7px;border-radius:1px;margin-top:4px;
+}
+.pkg-features{
+  list-style:none;display:flex;flex-direction:column;gap:7px;
+  border-top:1px solid var(--line);padding-top:16px;
+}
+.pkg-feature{
+  font-size:11px;color:var(--ink-mid);letter-spacing:.04em;
+  display:flex;align-items:center;gap:9px;
+}
+.pkg-feature::before{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--ink-light);flex-shrink:0;
+}
+.pkg-card.popular .pkg-feature::before{background:rgba(62,207,62,.5)}
+.pkg-cta{
+  margin-top:18px;display:block;width:100%;
+  font-family:var(--font-body);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  padding:11px 0;border:1px solid rgba(255,255,255,.1);background:none;color:var(--ink-mid);
+  cursor:none;text-align:center;text-decoration:none;
+  transition:border-color .25s,color .25s,background .25s;border-radius:1px;
+}
+.pkg-cta:hover,.pkg-card.popular .pkg-cta{border-color:var(--green);color:var(--green)}
+.pkg-card.popular .pkg-cta:hover{background:rgba(62,207,62,.08)}
+@media(hover:none){.pkg-cta{cursor:auto}}
+.pkg-custom-label{
+  font-family:var(--font-heading);font-size:2rem;font-weight:300;
+  color:var(--ink-mid);letter-spacing:-.02em;line-height:1;
+  font-style:italic;
+}
+
+/* ── CALCULATOR ─────────────────────────────────────────────── */
+.calc-form{display:flex;flex-direction:column;gap:28px}
+.calc-field{display:flex;flex-direction:column;gap:10px}
+.calc-label{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-mid)}
+.calc-input-row{display:flex;align-items:center;gap:0;border:1px solid var(--line);background:var(--bg2)}
+.calc-btn-dec,.calc-btn-inc{
+  width:44px;height:52px;flex-shrink:0;
+  background:none;border:none;color:var(--ink-mid);font-size:18px;
+  cursor:none;transition:color .2s,background .2s;
+  display:flex;align-items:center;justify-content:center;
+}
+.calc-btn-dec:hover,.calc-btn-inc:hover{color:var(--green);background:rgba(62,207,62,.05)}
+@media(hover:none){.calc-btn-dec,.calc-btn-inc{cursor:auto}}
+.calc-input{
+  flex:1;background:none;border:none;border-left:1px solid var(--line);border-right:1px solid var(--line);
+  color:var(--ink);font-family:var(--font-heading);font-size:1.8rem;font-weight:300;
+  text-align:center;padding:10px 0;outline:none;width:0;
+  letter-spacing:-.02em;
+}
+.calc-input::-webkit-inner-spin-button,.calc-input::-webkit-outer-spin-button{-webkit-appearance:none}
+.calc-unit{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mid);text-align:center;margin-top:6px}
+
+/* discount tier indicator */
+.calc-tiers{display:flex;gap:0;border:1px solid var(--line);overflow:hidden;border-radius:2px;margin-top:4px}
+.calc-tier{
+  flex:1;padding:8px 6px;text-align:center;
+  font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);
+  border-right:1px solid var(--line);transition:background .3s,color .3s;
+}
+.calc-tier:last-child{border-right:none}
+.calc-tier.active{background:rgba(62,207,62,.1);color:var(--green)}
+
+/* result panel */
+.calc-result{
+  border:1px solid var(--line);padding:28px;background:var(--bg2);
+  display:flex;flex-direction:column;gap:12px;
+}
+.calc-result-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.calc-result-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mid)}
+.calc-result-value{font-family:var(--font-heading);font-size:1.1rem;font-weight:300;color:var(--ink);letter-spacing:-.01em}
+.calc-result-divider{height:1px;background:var(--line)}
+.calc-total-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.calc-total-value{
+  font-family:var(--font-heading);font-size:2.8rem;font-weight:300;
+  color:var(--ink);letter-spacing:-.03em;line-height:1;
+}
+.calc-total-value em{font-style:normal;font-size:1.4rem;color:var(--ink-mid);margin-right:3px}
+.calc-savings{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--green);display:flex;align-items:center;gap:8px;
+}
+.calc-savings::before{
+  content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--green);
+}
+.calc-savings.hidden{visibility:hidden}
+
+.calc-cta{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--font-body);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  padding:14px 0;border:1px solid rgba(255,255,255,.12);background:none;color:var(--ink-mid);
+  cursor:none;text-decoration:none;text-align:center;
+  transition:border-color .25s,color .25s,background .25s;border-radius:1px;margin-top:4px;
+}
+.calc-cta:hover{border-color:var(--green);color:var(--green);background:rgba(62,207,62,.04)}
+@media(hover:none){.calc-cta{cursor:auto}}
+
+/* ── FOOTER ─────────────────────────────────────────────────── */
+.site-footer{border-top:1px solid var(--line);background:var(--bg);padding:64px 48px 0}
+.footer-top{
+  display:grid;grid-template-columns:220px 1fr;gap:64px;
+  padding-bottom:52px;border-bottom:1px solid var(--line);
+}
+.footer-brand{display:flex;flex-direction:column;gap:16px}
+.footer-logo-wrap{display:flex;align-items:center;gap:9px}
+.footer-brand-desc{font-size:12px;line-height:1.9;color:var(--ink-mid);letter-spacing:.04em}
+.footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-family:var(--font-body);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
+.footer-col-link{display:block;font-size:12px;color:var(--ink-mid);text-decoration:none;letter-spacing:.06em;padding:5px 0;transition:color .2s}
+.footer-col-link:hover{color:var(--green)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.footer-copy{font-size:11px;color:var(--ink-mid);letter-spacing:.08em}
+
+/* ── SCROLL TO TOP ──────────────────────────────────────────── */
+.scroll-top-btn{
+  position:fixed;bottom:36px;right:36px;
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.15);
+  color:var(--ink);cursor:none;
+  display:flex;align-items:center;justify-content:center;
+  z-index:9000;opacity:0;pointer-events:none;
+  transition:opacity .35s,border-color .2s,color .2s,background .2s,transform .2s;
+  backdrop-filter:blur(8px);
+}
+.scroll-top-btn.visible{opacity:1;pointer-events:all}
+.scroll-top-btn:hover{border-color:var(--green);color:var(--green);background:rgba(0,0,0,.9);transform:translateY(-3px)}
+@media(hover:none){.scroll-top-btn{cursor:auto}}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+@media(max-width:960px){
+  .pricing-main{grid-template-columns:1fr}
+  .pricing-block{padding:52px 32px}
+}
+@media(max-width:768px){
+  header{padding:18px 20px}
+  .pricing-hero{grid-template-columns:1fr;padding:56px 20px;gap:28px}
+  .pricing-block{padding:48px 20px}
+  .site-footer{padding:48px 20px 0}
+  .footer-top{grid-template-columns:1fr;gap:36px}
+  .footer-cols{grid-template-columns:repeat(2,1fr);gap:20px}
+}
+@media(max-width:600px){
+  .footer-cols{grid-template-columns:1fr;gap:12px}
+  .header-nav{gap:16px}
+}
+@media(hover:none){
+  .nav-btn{cursor:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<header>
+  <a href="index.html" class="logo" id="site-logo"></a>
+  <nav class="header-nav">
+    <a href="about.html" class="nav-btn">About Us</a>
+    <a href="index.html" class="nav-btn">Portfolio</a>
+    <a href="pricing.html" class="nav-btn active">Pricing</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="pricing-hero">
+  <div class="pricing-hero-left">
+    <p class="pricing-hero-label">Pricing</p>
+    <h1 class="pricing-hero-title">Simple,<br><em>transparent pricing.</em></h1>
+    <div class="currency-badge" id="currency-badge">
+      <span class="currency-dot"></span>
+      <span id="currency-badge-text">Detecting your region…</span>
+    </div>
+  </div>
+  <p class="pricing-hero-desc">Choose a ready-made package or use the calculator to build your exact quote. The more you order — the less you pay per unit.</p>
+</section>
+
+<!-- MAIN: Packages + Calculator -->
+<section class="pricing-main">
+
+  <!-- LEFT: Fixed packages -->
+  <div class="pricing-block">
+    <p class="block-label">Fixed packages</p>
+    <h2 class="block-title">Ready-made<br>packages</h2>
+    <div class="pkg-list" id="pkg-list"></div>
+  </div>
+
+  <!-- RIGHT: Calculator -->
+  <div class="pricing-block">
+    <p class="block-label">Custom quote</p>
+    <h2 class="block-title">Build your<br>quote</h2>
+
+    <div class="calc-form">
+      <!-- Photos -->
+      <div class="calc-field">
+        <div class="calc-label">Number of photos</div>
+        <div class="calc-input-row">
+          <button class="calc-btn-dec" data-field="photos" aria-label="Decrease">−</button>
+          <input class="calc-input" type="number" id="calc-photos" value="0" min="0" max="999" readonly>
+          <button class="calc-btn-inc" data-field="photos" aria-label="Increase">+</button>
+        </div>
+        <div class="calc-unit" id="calc-photo-unit">× 0 per photo</div>
+      </div>
+
+      <!-- Videos -->
+      <div class="calc-field">
+        <div class="calc-label">Number of videos</div>
+        <div class="calc-input-row">
+          <button class="calc-btn-dec" data-field="videos" aria-label="Decrease">−</button>
+          <input class="calc-input" type="number" id="calc-videos" value="0" min="0" max="999" readonly>
+          <button class="calc-btn-inc" data-field="videos" aria-label="Increase">+</button>
+        </div>
+        <div class="calc-unit" id="calc-video-unit">× 0 per video</div>
+      </div>
+
+      <!-- Discount tiers -->
+      <div class="calc-field">
+        <div class="calc-label">Discount tier</div>
+        <div class="calc-tiers">
+          <div class="calc-tier" id="tier-0">No discount</div>
+          <div class="calc-tier" id="tier-1">10+ units<br>−5%</div>
+          <div class="calc-tier" id="tier-2">20+ units<br>−10%</div>
+          <div class="calc-tier" id="tier-3">50+ units<br>−15%</div>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="calc-result">
+        <div class="calc-result-row">
+          <span class="calc-result-label">Subtotal</span>
+          <span class="calc-result-value" id="calc-subtotal">—</span>
+        </div>
+        <div class="calc-result-row">
+          <span class="calc-result-label">Discount</span>
+          <span class="calc-result-value" id="calc-discount-val">—</span>
+        </div>
+        <div class="calc-result-divider"></div>
+        <div class="calc-result-row" style="align-items:flex-end">
+          <span class="calc-total-label">Total</span>
+          <div class="calc-total-value" id="calc-total"><em id="calc-currency-sym"></em><span id="calc-total-num">0</span></div>
+        </div>
+        <div class="calc-savings hidden" id="calc-savings">You save <span id="calc-savings-val"></span></div>
+      </div>
+
+      <a href="mailto:trevioagency@gmail.com" class="calc-cta" id="calc-cta-link">
+        Get a quote <span>→</span>
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-wrap" id="footer-logo-el"></div>
+      <p class="footer-brand-desc" id="footer-brand-desc"></p>
+    </div>
+    <div class="footer-cols" id="footer-cols"></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy" id="footer-copy-el"></div>
+  </div>
+</footer>
+
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M9 13V5M5 9l4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script src="config.js"></script>
+<script>
+// ── TYPOGRAPHY FROM CONFIG ──────────────────────────────────────
+(function(){
+  var r = document.documentElement.style;
+  var map = {
+    '--font-heading':          typeof FONT_HEADING            !== 'undefined' ? FONT_HEADING            : null,
+    '--font-body':             typeof FONT_BODY               !== 'undefined' ? FONT_BODY               : null,
+    '--font-size-body':        typeof FONT_SIZE_BODY          !== 'undefined' ? FONT_SIZE_BODY          : null,
+    '--font-size-hero':        typeof FONT_SIZE_HERO          !== 'undefined' ? FONT_SIZE_HERO          : null,
+    '--font-size-section':     typeof FONT_SIZE_SECTION       !== 'undefined' ? FONT_SIZE_SECTION       : null,
+    '--font-weight-heading':   typeof FONT_WEIGHT_HEADING     !== 'undefined' ? FONT_WEIGHT_HEADING     : null,
+    '--letter-spacing-heading':typeof LETTER_SPACING_HEADING  !== 'undefined' ? LETTER_SPACING_HEADING  : null,
+  };
+  Object.keys(map).forEach(function(k){ if(map[k]) r.setProperty(k, map[k]); });
+})();
+
+document.title = 'Trevio — Pricing';
+
+// ── LOGO ────────────────────────────────────────────────────────
+(function(){
+  var svgMark = '<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    + '<path fill-rule="evenodd" clip-rule="evenodd" fill="white"'
+    + ' d="M3 3H17C22 3 24 7 24 12C24 20 17 23 10 23H3V3Z'
+    + ' M7 7H13C16.5 7 18.5 9.5 18.5 12.5C18.5 16.5 15.5 19 10.5 19H7V7Z'
+    + ' M10 11H12.5C13.9 11 15 12.1 15 13.5C15 14.9 13.9 16 12.5 16H10V11Z"/>'
+    + '</svg>';
+
+  function buildLogo(small) {
+    if (LOGO) {
+      return '<img src="' + LOGO + '" alt="' + BRAND_NAME + '" class="logo-img"'
+        + (small ? ' style="height:22px"' : '') + '>';
+    }
+    return svgMark + '<span class="logo-mark-text" style="'
+      + (small ? 'font-size:.85rem' : '') + '">' + BRAND_NAME + '</span>';
+  }
+
+  document.getElementById('site-logo').innerHTML = buildLogo(false);
+  document.getElementById('footer-logo-el').innerHTML = buildLogo(true);
+})();
+
+// ── FOOTER ──────────────────────────────────────────────────────
+document.getElementById('footer-brand-desc').textContent =
+  typeof FOOTER_BRAND_DESC !== 'undefined' ? FOOTER_BRAND_DESC : '';
+document.getElementById('footer-copy-el').textContent = FOOTER_COPY;
+
+if (typeof FOOTER_COLUMNS !== 'undefined') {
+  var colsEl = document.getElementById('footer-cols');
+  FOOTER_COLUMNS.forEach(function(col){
+    var div = document.createElement('div');
+    div.className = 'footer-col';
+    div.innerHTML = '<div class="footer-col-title">' + col.title + '</div>'
+      + col.links.map(function(l){
+          return '<a href="' + l.href + '" class="footer-col-link">' + l.label + '</a>';
+        }).join('');
+    colsEl.appendChild(div);
+  });
+}
+
+// ── SCROLL TO TOP ────────────────────────────────────────────────
+var scrollBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', function(){
+  scrollBtn.classList.toggle('visible', window.scrollY > 400);
+}, {passive:true});
+scrollBtn.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+
+// ── PRICING LOGIC ────────────────────────────────────────────────
+var pricing = {
+  sym: '€',
+  photoPrice: PRICE_PHOTO_EU,
+  videoPrice: PRICE_VIDEO_EU,
+  label: 'EUR',
+  region: 'eu',
+};
+
+function getDiscount(units) {
+  if (units >= 50) return DISCOUNT_TIER3;
+  if (units >= 20) return DISCOUNT_TIER2;
+  if (units >= 10) return DISCOUNT_TIER1;
+  return 0;
+}
+
+function fmt(n) {
+  return n.toLocaleString('en', {maximumFractionDigits: 0});
+}
+
+function applyRegion(countryCode) {
+  if (countryCode === 'UA') {
+    pricing = { sym: '₴', photoPrice: PRICE_PHOTO_UA, videoPrice: PRICE_VIDEO_UA, label: 'UAH', region: 'ua' };
+  } else if (countryCode === 'US') {
+    pricing = { sym: '$', photoPrice: PRICE_PHOTO_US, videoPrice: PRICE_VIDEO_US, label: 'USD', region: 'us' };
+  } else {
+    pricing = { sym: '€', photoPrice: PRICE_PHOTO_EU, videoPrice: PRICE_VIDEO_EU, label: 'EUR', region: 'eu' };
+  }
+  document.getElementById('currency-badge-text').textContent =
+    'Prices shown in ' + pricing.label + ' (' + countryCode + ')';
+  document.getElementById('calc-currency-sym').textContent = pricing.sym;
+  renderPackages();
+  updateCalc();
+  updateUnits();
+}
+
+// ── IP DETECTION ─────────────────────────────────────────────────
+fetch('https://ipapi.co/json/')
+  .then(function(r){ return r.json(); })
+  .then(function(d){ applyRegion(d.country_code || 'XX'); })
+  .catch(function(){
+    document.getElementById('currency-badge-text').textContent = 'Prices shown in EUR';
+    document.getElementById('calc-currency-sym').textContent = pricing.sym;
+    renderPackages();
+    updateCalc();
+    updateUnits();
+  });
+
+// ── RENDER PACKAGES ──────────────────────────────────────────────
+function renderPackages() {
+  var listEl = document.getElementById('pkg-list');
+  listEl.innerHTML = '';
+
+  PRICING_PACKAGES.forEach(function(pkg){
+    var card = document.createElement('div');
+    card.className = 'pkg-card' + (pkg.popular ? ' popular' : '');
+
+    var priceHtml = '';
+    if (pkg.custom) {
+      priceHtml = '<div class="pkg-custom-label">Let\'s talk</div>';
+    } else {
+      var units = pkg.photos + pkg.videos;
+      var rawTotal = pkg.photos * pricing.photoPrice + pkg.videos * pricing.videoPrice;
+      var disc = getDiscount(units);
+      var finalTotal = Math.round(rawTotal * (1 - disc / 100));
+
+      priceHtml = '<div class="pkg-price-wrap">'
+        + (disc > 0
+            ? '<div class="pkg-price-strike" style="font-size:1rem;font-family:\'Cormorant Garamond\',serif;color:var(--ink-mid)">'
+              + pricing.sym + fmt(rawTotal) + '</div>'
+            : '')
+        + '<div class="pkg-price"><em>' + pricing.sym + '</em>' + fmt(finalTotal) + '</div>'
+        + '<div class="pkg-price-note">' + pkg.photos + ' photos' + (pkg.videos ? ' + ' + pkg.videos + ' videos' : '') + '</div>'
+        + (disc > 0 ? '<div class="pkg-discount-tag">Save ' + disc + '%</div>' : '')
+        + '</div>';
+    }
+
+    card.innerHTML =
+      (pkg.popular ? '<div class="pkg-popular-badge">Most popular</div>' : '')
+      + '<div class="pkg-top">'
+      +   '<div class="pkg-name">' + pkg.name + '</div>'
+      +   priceHtml
+      + '</div>'
+      + '<ul class="pkg-features">'
+      +   pkg.features.map(function(f){ return '<li class="pkg-feature">' + f + '</li>'; }).join('')
+      + '</ul>'
+      + '<a href="mailto:' + FOOTER_EMAIL + '" class="pkg-cta">'
+      +   (pkg.custom ? 'Contact us →' : 'Order now →')
+      + '</a>';
+
+    listEl.appendChild(card);
+  });
+}
+
+// ── CALCULATOR ──────────────────────────────────────────────────
+var calcPhotos = 0, calcVideos = 0;
+
+function updateUnits() {
+  document.getElementById('calc-photo-unit').textContent =
+    pricing.sym + pricing.photoPrice + ' per photo';
+  document.getElementById('calc-video-unit').textContent =
+    pricing.sym + pricing.videoPrice + ' per video';
+}
+
+function updateCalc() {
+  var totalUnits = calcPhotos + calcVideos;
+  var rawTotal   = calcPhotos * pricing.photoPrice + calcVideos * pricing.videoPrice;
+  var disc       = getDiscount(totalUnits);
+  var savings    = Math.round(rawTotal * disc / 100);
+  var finalTotal = rawTotal - savings;
+
+  // tier highlight
+  [0,1,2,3].forEach(function(i){ document.getElementById('tier-'+i).classList.remove('active'); });
+  if      (totalUnits >= 50) document.getElementById('tier-3').classList.add('active');
+  else if (totalUnits >= 20) document.getElementById('tier-2').classList.add('active');
+  else if (totalUnits >= 10) document.getElementById('tier-1').classList.add('active');
+  else                       document.getElementById('tier-0').classList.add('active');
+
+  // subtotal / discount / total
+  if (rawTotal === 0) {
+    document.getElementById('calc-subtotal').textContent    = '—';
+    document.getElementById('calc-discount-val').textContent = '—';
+    document.getElementById('calc-total-num').textContent   = '0';
+    document.getElementById('calc-savings').classList.add('hidden');
+  } else {
+    document.getElementById('calc-subtotal').textContent    = pricing.sym + fmt(rawTotal);
+    document.getElementById('calc-discount-val').textContent = disc > 0 ? '−' + disc + '%' : '0%';
+    document.getElementById('calc-total-num').textContent   = fmt(finalTotal);
+    document.getElementById('calc-currency-sym').textContent = pricing.sym;
+    if (savings > 0) {
+      document.getElementById('calc-savings').classList.remove('hidden');
+      document.getElementById('calc-savings-val').textContent = pricing.sym + fmt(savings);
+    } else {
+      document.getElementById('calc-savings').classList.add('hidden');
+    }
+  }
+
+  // update mailto link with quote details
+  var subject = encodeURIComponent('Pricing quote request — ' + calcPhotos + ' photos, ' + calcVideos + ' videos');
+  var body    = encodeURIComponent(
+    'Hi Trevio,\n\nI\'d like to get a quote for:\n'
+    + '  Photos: ' + calcPhotos + '\n'
+    + '  Videos: ' + calcVideos + '\n'
+    + '  Total (estimated): ' + pricing.sym + fmt(finalTotal) + ' ' + pricing.label + '\n\n'
+    + 'Please send me more details.'
+  );
+  document.getElementById('calc-cta-link').href = 'mailto:' + FOOTER_EMAIL + '?subject=' + subject + '&body=' + body;
+}
+
+// stepper buttons
+document.querySelectorAll('.calc-btn-dec,.calc-btn-inc').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var field = btn.dataset.field;
+    var dir   = btn.classList.contains('calc-btn-inc') ? 1 : -1;
+    if (field === 'photos') {
+      calcPhotos = Math.max(0, calcPhotos + dir);
+      document.getElementById('calc-photos').value = calcPhotos;
+    } else {
+      calcVideos = Math.max(0, calcVideos + dir);
+      document.getElementById('calc-videos').value = calcVideos;
+    }
+    updateCalc();
+  });
+});
+
+// ── CURSOR ───────────────────────────────────────────────────────
+var dot  = document.getElementById('curDot');
+var ring = document.getElementById('curRing');
+if (window.matchMedia('(hover: hover)').matches) {
+  var mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+  (function animRing(){ rx+=(mx-rx)*.22; ry+=(my-ry)*.22; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+}
+</script>
+</body>
+</html>

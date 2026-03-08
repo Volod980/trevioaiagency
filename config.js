@@ -129,6 +129,54 @@ const ABOUT_PROCESS_STEPS = [
 const ABOUT_CTA_TEXT = "View Our Portfolio";
 const ABOUT_CTA_LINK = "index.html";
 
+// ── PRICING ──────────────────────────────────────────────────────
+// Base price per one photo (in local currency)
+const PRICE_PHOTO_UA = 150;   // UAH
+const PRICE_PHOTO_EU = 5;     // EUR
+const PRICE_PHOTO_US = 6;     // USD
+
+// Base price per one video
+const PRICE_VIDEO_UA = 400;   // UAH
+const PRICE_VIDEO_EU = 12;    // EUR
+const PRICE_VIDEO_US = 14;    // USD
+
+// Progressive discount tiers (% off total)
+const DISCOUNT_TIER1 = 5;    // from 10 units
+const DISCOUNT_TIER2 = 10;   // from 20 units
+const DISCOUNT_TIER3 = 15;   // from 50 units
+
+// Fixed packages (photos/videos count; price is auto-calculated from base rates above)
+const PRICING_PACKAGES = [
+  {
+    id: 'starter',
+    name: 'Starter',
+    photos: 5,
+    videos: 0,
+    features: ['5 AI product photos', 'Any background or style', '2-day turnaround', 'High-res delivery'],
+  },
+  {
+    id: 'pro',
+    name: 'Pro',
+    photos: 20,
+    videos: 3,
+    popular: true,
+    features: ['20 AI product photos', '3 AI product videos', 'Any style or location', '3-day turnaround', 'High-res delivery', 'Priority support'],
+  },
+  {
+    id: 'studio',
+    name: 'Studio',
+    photos: 50,
+    videos: 10,
+    features: ['50 AI product photos', '10 AI product videos', 'Custom brand style guide', '5-day turnaround', 'High-res delivery', 'Dedicated account manager'],
+  },
+  {
+    id: 'enterprise',
+    name: 'Enterprise',
+    custom: true,
+    features: ['Unlimited photos & videos', 'Custom style & brand guide', 'Dedicated creative team', 'API integration available', 'SLA guaranteed'],
+  },
+];
+
 // ── CASES ────────────────────────────────────────────────────────
 //
 //  FIELDS:
