@@ -575,7 +575,7 @@ casesEl.classList.add('cols-3');
   document.getElementById('grid-'+n).addEventListener('click', function(){
     currentCols = n;
     [1,2,3].forEach(function(x){ document.getElementById('grid-'+x).classList.toggle('active', x===n); });
-    casesEl.className = 'cases cols-'+n;
+    renderCases(currentFiltered);
   });
 });
 // set grid-3 as initially active
