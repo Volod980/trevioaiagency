@@ -311,17 +311,21 @@ header{
 
 /* ── SEE MORE ───────────────────────────────────────────────── */
 .see-more-wrap{
-  grid-column:1 / -1;display:flex;justify-content:center;
-  padding:40px 0 20px;
+  grid-column:1 / -1;display:flex;align-items:center;gap:24px;
+  padding:48px 0 28px;
+}
+.see-more-wrap::before,.see-more-wrap::after{
+  content:'';flex:1;height:1px;background:var(--line);
 }
 .see-more-btn{
-  font-family:var(--font-body);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-  padding:14px 40px;border:1px solid rgba(255,255,255,.15);
+  font-family:var(--font-body);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  padding:13px 32px;border:1px solid rgba(255,255,255,.12);
   background:none;color:var(--ink-mid);cursor:none;
-  transition:border-color .25s,color .25s;border-radius:2px;
+  display:flex;align-items:center;gap:10px;white-space:nowrap;
+  transition:border-color .25s,color .25s,background .25s;border-radius:2px;
 }
-.see-more-btn:hover{border-color:var(--green);color:var(--green)}
-.see-more-count{color:var(--ink-light)}
+.see-more-btn::after{content:'↓';font-size:13px;line-height:1}
+.see-more-btn:hover{border-color:var(--green);color:var(--green);background:rgba(62,207,62,.04)}
 @media(hover:none){.see-more-btn{cursor:auto}}
 
 /* ── SCROLL TO TOP ──────────────────────────────────────────── */
@@ -562,7 +566,7 @@ var tabsEl    = document.getElementById('tabs');
 var casesEl   = document.getElementById('cases');
 var allTags   = ['All'].concat([].filter.call(CASES.map(function(c){return c.tag}), function(v,i,a){return a.indexOf(v)===i;}));
 var activeTab = 'All', currentFiltered = CASES.slice(), lbCur = 0, lbAfterIdx = 0;
-var VISIBLE_COUNT = 10;
+var ROWS_TO_SHOW = 10;
 
 // grid switcher — manual override
 var currentCols = 3;
@@ -653,15 +657,14 @@ function renderCases(list) {
   casesEl.className = 'cases cols-'+currentCols;
   setTimeout(function(){
     casesEl.innerHTML = '';
-    var shown = Math.min(list.length, VISIBLE_COUNT);
+    var shown = Math.min(list.length, ROWS_TO_SHOW * currentCols);
     for (var i = 0; i < shown; i++) {
       casesEl.appendChild(buildCaseWrap(list[i], i, i*0.06));
     }
     if (list.length > shown) {
       var moreWrap = document.createElement('div');
       moreWrap.className = 'see-more-wrap';
-      var remaining = list.length - shown;
-      moreWrap.innerHTML = '<button class="see-more-btn">See more <span class="see-more-count">(' + remaining + ')</span></button>';
+      moreWrap.innerHTML = '<button class="see-more-btn">See more</button>';
       moreWrap.querySelector('.see-more-btn').addEventListener('click', function(){
         moreWrap.remove();
         for (var j = shown; j < list.length; j++) {
